@@ -70,8 +70,27 @@ async function generateKindleHtml() {
             background-color: #fbfbf9;
         }
         h1 { margin-bottom: 2em; text-align: center; color: #1a237e; }
-        h2 { font-size: 1.4em; margin-top: 3em; border-bottom: 2px solid #3f51b5; padding-bottom: 0.3em; page-break-before: always; }
-        h3 { font-size: 1.2em; margin-top: 2em; border-left: 5px solid #ff9800; padding-left: 10px; }
+        
+        /* 大見出し（h2）- 青系ボックススタイル */
+        h2 { 
+            font-size: 1.4em; 
+            margin-top: 3em; 
+            padding: 15px 20px;
+            background-color: #e3f2fd; /* 淡い青背景 */
+            border-left: 6px solid #1976d2; /* 濃い青の左線 */
+            color: #1565c0; /* 青系テキスト */
+            page-break-before: always; 
+        }
+        
+        /* 小見出し（h3）- 青系バースタイル */
+        h3 { 
+            font-size: 1.2em; 
+            margin-top: 2em; 
+            padding: 10px 15px;
+            background-color: #e8f4f8; /* より淡い青背景 */
+            border-left: 4px solid #42a5f5; /* 明るい青の左線 */
+            color: #1976d2; /* 青系テキスト */
+        }
         p { margin-bottom: 1em; text-align: justify; }
         img { max-width: 100%; height: auto; display: block; margin: 1em auto; border-radius: 4px; }
         ul, ol { margin-bottom: 1em; padding-left: 1.5em; }
