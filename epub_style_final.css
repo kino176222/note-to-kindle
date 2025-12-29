@@ -1,21 +1,18 @@
-/* Kindle用カスタムCSS (リッチデザイン + TOC階層修正版) */
+/* Kindle用カスタムCSS (リッチデザイン + TOC階層修正版 Final) */
 
 /* --------------------------------------------------
-   目次 (TOC) の調整
+   目次 (TOC) の調整 - ユーザー要望の階層化と間延び解消
    -------------------------------------------------- */
 nav#toc ol,
 nav#toc ul {
     list-style-type: none;
-    /* デフォルトの番号(1. 2. 3...)は消す */
     padding-left: 0;
-    /* 大元のインデントはなし */
 }
 
-/* 階層ごとのインデント設定 */
+/* 階層ごとのインデント設定（Kindle標準目次用 - 一応残す） */
 nav#toc li>ol,
 nav#toc li>ul {
     padding-left: 1.5em;
-    /* 子階層（H3など）は右にずらす */
     list-style-type: none;
 }
 
@@ -33,9 +30,7 @@ a {
 nav#toc a {
     text-decoration: none;
     color: #0066cc;
-    /* 目次も青くする */
     display: block;
-    /* リンク領域を広げる */
 }
 
 /* --------------------------------------------------
@@ -83,9 +78,6 @@ blockquote {
     padding: 10px 15px;
     color: #333;
     font-family: monospace, serif;
-
-    /* 連続した引用がつながって見えるようにするおまじない
-       ただしMarkdown側で繋げるのが本筋 */
 }
 
 code {
@@ -100,7 +92,10 @@ code {
     font-family: monospace;
     background-color: #eee;
 }
-/* インライン目次（手動挿入分）のスタイル */
+
+/* --------------------------------------------------
+   インライン目次（手動挿入分）のスタイル - 改善版
+   -------------------------------------------------- */
 .inline-toc {
     background-color: #fff;
     padding: 10px;
@@ -115,24 +110,56 @@ code {
     margin: 0;
 }
 
-.inline-toc li {
-    border-bottom: 1px solid #f0f0f0;
-    margin: 0;
+/* 章（H2レベル）のスタイル */
+.inline-toc li.toc-chapter {
+    /* 章ごとの間隔を確保して区切りをよくする */
+    margin-top: 1.2em;
+    margin-bottom: 0.2em;
 }
 
-.inline-toc li:last-child {
-    border-bottom: none;
+/* 最初の章は上を開けない */
+.inline-toc li.toc-chapter:first-child {
+    margin-top: 0;
 }
 
-.inline-toc a {
-    display: block;        /* 行全体をタップ可能に */
-    padding: 12px 10px;    /* タップ領域を広げる */
-    color: #0066cc;        /* 青色リンク */
-    text-decoration: none;
-    font-size: 1.0em;
+.inline-toc li.toc-chapter>a {
     font-weight: bold;
+    font-size: 1.1em;
+    color: #0055aa;
+    padding: 6px 5px;
+    border-bottom: 1px solid #ddd;
+    /* 章の区切り線 */
+    display: block;
 }
 
-.inline-toc a:active {
-    background-color: #e6f0ff; /* タップ時のフィードバック */
+/* 節（H3レベル）のリスト */
+.inline-toc ul.toc-section {
+    /* ここで明確に段落を下げる（ユーザー要望: 空白を1文字空けて階層化） */
+    padding-left: 1.5em;
+    /* 1.5文字分下げる */
+    margin-top: 0.2em;
+}
+
+/* 節（H3レベル）のアイテム */
+.inline-toc li.toc-item {
+    margin: 0;
+    border-bottom: 1px solid #fcfcfc;
+    /* うっすらとした線 */
+}
+
+.inline-toc li.toc-item>a {
+    font-size: 0.95em;
+    font-weight: normal;
+    /* 太字にしない */
+    padding: 5px 5px;
+    /* 上下の余白を詰める（ユーザー要望: 間延び解消） */
+    color: #4477aa;
+    display: block;
+}
+
+/* タップ時の反応 */
+.inline-toc a:active,
+.inline-toc a:hover {
+    background-color: #e6f0ff;
+    border-radius: 4px;
 }
