@@ -1,0 +1,75 @@
+/* Kindle用カスタムCSS (リッチデザイン版) */
+
+/* --------------------------------------------------
+   見出しデザイン (Web風に目立たせる)
+   -------------------------------------------------- */
+
+h1 {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+h2 {
+    /* 背景色付きのボックスデザイン */
+    background-color: #f4f8fb;
+    /* 薄い青グレー */
+    border-left: 6px solid #2b7bb9;
+    /* 左側に太い青線 */
+    padding: 10px 15px;
+    /* 内側の余白 */
+    margin-top: 2em;
+    margin-bottom: 1em;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #333;
+    page-break-after: avoid;
+    /* 見出し直後での改ページ防止 */
+}
+
+h3 {
+    /* 下線付きのデザイン */
+    border-bottom: 2px solid #2b7bb9;
+    padding-bottom: 5px;
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #444;
+    page-break-after: avoid;
+}
+
+/* --------------------------------------------------
+   プロンプト・引用ボックス
+   -------------------------------------------------- */
+blockquote {
+    background-color: #f7f7f7;
+    /* 定番のグレー背景 */
+    border-left: 4px solid #777;
+    /* グレーのアクセント線 */
+    margin: 1.5em 0;
+    padding: 10px 15px;
+    color: #333;
+    font-family: monospace, serif;
+    /* 全角空白などがわかりやすいように */
+}
+
+/* --------------------------------------------------
+   コード・URL表示
+   -------------------------------------------------- */
+code {
+    background-color: #eee;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: monospace;
+    /* 等幅フォントで揃える */
+    font-size: 0.9em;
+}
+
+/* Markdownのバックスラッシュ記法などでcodeタグにならない場合用 */
+.url-text {
+    font-family: monospace;
+    background-color: #eee;
+}

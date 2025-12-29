@@ -1,0 +1,138 @@
+/* Kindle用カスタムCSS (リッチデザイン + TOC階層修正版) */
+
+/* --------------------------------------------------
+   目次 (TOC) の調整
+   -------------------------------------------------- */
+nav#toc ol,
+nav#toc ul {
+    list-style-type: none;
+    /* デフォルトの番号(1. 2. 3...)は消す */
+    padding-left: 0;
+    /* 大元のインデントはなし */
+}
+
+/* 階層ごとのインデント設定 */
+nav#toc li>ol,
+nav#toc li>ul {
+    padding-left: 1.5em;
+    /* 子階層（H3など）は右にずらす */
+    list-style-type: none;
+}
+
+nav#toc li {
+    margin-bottom: 0.3em;
+    font-size: 1.0em;
+}
+
+/* 基本のリンクスタイル */
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+nav#toc a {
+    text-decoration: none;
+    color: #0066cc;
+    /* 目次も青くする */
+    display: block;
+    /* リンク領域を広げる */
+}
+
+/* --------------------------------------------------
+   見出しデザイン
+   -------------------------------------------------- */
+h1 {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+h2 {
+    background-color: #f4f8fb;
+    border-left: 6px solid #2b7bb9;
+    padding: 10px 15px;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #333;
+    page-break-after: avoid;
+}
+
+h3 {
+    border-bottom: 2px solid #2b7bb9;
+    padding-bottom: 5px;
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #444;
+    page-break-after: avoid;
+}
+
+/* --------------------------------------------------
+   プロンプト・引用ボックス
+   -------------------------------------------------- */
+blockquote {
+    display: block;
+    background-color: #f7f7f7;
+    border-left: 4px solid #777;
+    margin: 1.5em 0;
+    padding: 10px 15px;
+    color: #333;
+    font-family: monospace, serif;
+
+    /* 連続した引用がつながって見えるようにするおまじない
+       ただしMarkdown側で繋げるのが本筋 */
+}
+
+code {
+    background-color: #eee;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.url-text {
+    font-family: monospace;
+    background-color: #eee;
+}
+/* インライン目次（手動挿入分）のスタイル */
+.inline-toc {
+    background-color: #fff;
+    padding: 10px;
+    margin: 2em 0;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.inline-toc ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.inline-toc li {
+    border-bottom: 1px solid #f0f0f0;
+    margin: 0;
+}
+
+.inline-toc li:last-child {
+    border-bottom: none;
+}
+
+.inline-toc a {
+    display: block;        /* 行全体をタップ可能に */
+    padding: 12px 10px;    /* タップ領域を広げる */
+    color: #0066cc;        /* 青色リンク */
+    text-decoration: none;
+    font-size: 1.0em;
+    font-weight: bold;
+}
+
+.inline-toc a:active {
+    background-color: #e6f0ff; /* タップ時のフィードバック */
+}

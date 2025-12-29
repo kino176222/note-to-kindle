@@ -1,4 +1,3 @@
-
 const fs = require('fs-extra');
 const MarkdownIt = require('markdown-it');
 const path = require('path');
@@ -48,6 +47,10 @@ async function generateKindleHtml() {
 
     htmlContent = htmlContent.replace(/<p>\s*Q[\.．]\s*(.*?)<\/p>/g, '<div class="qa-item qa-q"><span class="qa-icon">Q.</span> $1</div>');
     htmlContent = htmlContent.replace(/<p>\s*A[\.．]\s*(.*?)<\/p>/g, '<div class="qa-item qa-a"><span class="qa-icon">A.</span> $1</div>');
+
+    // Convert code blocks to inline-styled divs for Kindle compatibility
+    htmlContent = htmlContent.replace(/<pre><code>([\s\S]*?)<\/code><\/pre>/g,
+        '<div style="background-color: #f5f5f5; padding: 10px; margin: 10px 0; font-family: monospace; border-left: 3px solid #666;">$1</div>');
     htmlContent = htmlContent.replace(/<p>\s*(【TIP】|【ヒント】|💡)\s*(.*?)<\/p>/g, '<div class="hint-box"><strong>💡 $1</strong><br>$2</div>');
 
     // ---------------------------------------------------------
