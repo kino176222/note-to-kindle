@@ -105,8 +105,8 @@ async function generateKindleHtml() {
         /* Components: TIGHTER CHECKLIST */
         .checklist-item { 
             background: #e8f5e9; 
-            padding: 8px 10px; /* SLightly tighter padding */
-            margin: 2px 0;     /* Reduce margin from 5px to 2px */
+            padding: 8px 10px;
+            margin: 0;     /* Remove all margin for tighter spacing */
             border-left: 5px solid #43a047; 
             list-style: none; /* For li items */
         }
