@@ -72,31 +72,18 @@ async function generateKindleHtml() {
         }
         h1 { margin-bottom: 2em; text-align: center; color: #1a237e; }
         
-        /* 大見出し（h2）- 大きな枠線ボックススタイル */
+        /* 大見出し（h2）- シンプルな左バースタイル */
         h2 { 
             font-size: 1.5em; 
             margin: 3em 0 2em 0;
-            padding: 25px 30px 25px 80px;
+            padding: 20px 30px 20px 30px;
             background-color: #ffffff;
             border: 3px solid #1976d2;
             border-left: 12px solid #1976d2;
             color: #1a237e;
-            position: relative;
+            text-align: left;
             page-break-before: always;
             font-weight: bold;
-        }
-        
-        /* 章番号を自動表示 */
-        h2::before {
-            content: "第" counter(chapter-counter) "章";
-            counter-increment: chapter-counter;
-            position: absolute;
-            left: 15px;
-            top: 15px;
-            font-size: 0.6em;
-            color: #1976d2;
-            font-weight: normal;
-            letter-spacing: 0.1em;
         }
         
         /* 小見出し（h3）- シンプルな青バー */
