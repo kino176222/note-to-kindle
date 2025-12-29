@@ -1,0 +1,1578 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Vibe Coding入門</title>
+    <style>
+        body {
+            font-family: "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+            line-height: 1.8;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 5%;
+            background-color: #fbfbf9;
+        }
+        h1 { margin-bottom: 2em; text-align: center; color: #1a237e; }
+        h2 { font-size: 1.4em; margin-top: 3em; border-bottom: 2px solid #3f51b5; padding-bottom: 0.3em; page-break-before: always; }
+        h3 { font-size: 1.2em; margin-top: 2em; border-left: 5px solid #ff9800; padding-left: 10px; }
+        p { margin-bottom: 1em; text-align: justify; }
+        img { max-width: 100%; height: auto; display: block; margin: 1em auto; border-radius: 4px; }
+        ul, ol { margin-bottom: 1em; padding-left: 1.5em; }
+        li { margin-bottom: 0.2em; }
+
+        /* Components */
+        .checklist-item { background: #e8f5e9; padding: 10px; margin: 5px 0; border-left: 5px solid #43a047; list-style: none; }
+        .qa-item { padding: 10px; border: 1px solid #ddd; margin: 5px 0; border-radius: 4px; }
+        .qa-q { background: #e1f5fe; color: #0277bd; font-weight: bold; }
+        .qa-a { background: #fff3e0; }
+        .hint-box { background: #fffde7; padding: 15px; border: 1px dashed #fdd835; margin: 20px 0; }
+        
+        /* TOC */
+        .toc { background: #f5f5f5; padding: 20px; border-radius: 8px; margin-bottom: 40px; }
+        .toc h2 { border: none; text-align: center; margin: 0; }
+        .toc ul { list-style: none; padding: 0; }
+        .toc-h2 { font-weight: bold; margin-top: 10px; border-bottom: 1px solid #ddd; }
+        .toc-h3 { margin-left: 20px; font-size: 0.9em; color: #666; }
+        .toc a { text-decoration: none; color: #333; display: block; }
+        .app-showcase, .x-contact { margin-top: 50px; padding: 20px; background: #eeeeee; border-radius: 8px; text-align: center; }
+        a { color: #1565c0; }
+
+        /* ----------------------------------------------------- */
+        /*  CODE BLOCK STYLING (Terminal / Editor Look)          */
+        /* ----------------------------------------------------- */
+        pre {
+            background-color: #282a36; /* Dracula Dark */
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: Consolas, "Courier New", monospace;
+            font-size: 0.9em;
+            margin: 1.5em 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        /* Top bar simulation */
+        pre::before {
+            content: "PROMPT / CODE";
+            display: block;
+            background: #44475a;
+            color: #bd93f9;
+            font-size: 0.7em;
+            padding: 2px 10px;
+            border-radius: 4px 4px 0 0;
+            margin: -15px -15px 10px -15px; /* Pull outside padding */
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        code {
+            font-family: Consolas, "Courier New", monospace;
+        }
+        /* Inline code */
+        p code, li code {
+            background-color: #f0f0f0;
+            color: #d63384;
+            padding: 2px 4px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="toc"><h2>目 次</h2><ul><li class="toc-h2"><a href="#header-1">AIと対話してアプリを作り、世界に公開する冒険の書</a></li><li class="toc-h2"><a href="#header-2">本書のクリア条件（ゴール）</a></li><li class="toc-h2"><a href="#header-3">0章：まずはこれだけ（ゴール宣言）</a></li><li class="toc-h3"><a href="#header-4">0.1 本書でできるようになること</a></li><li class="toc-h2"><a href="#header-5">1章：Vibe Codingという考え方（概念）</a></li><li class="toc-h3"><a href="#header-6">1.1 Vibe Codingとは何か</a></li><li class="toc-h3"><a href="#header-7">1.2 なぜ初心者向きなのか</a></li><li class="toc-h3"><a href="#header-8">1.3 【重要】Vibe Codingの極意（失敗しない前提）</a></li><li class="toc-h2"><a href="#header-9">2章：準備フェーズ（AIと環境を整える）</a></li><li class="toc-h3"><a href="#header-10">2.1 なぜ「Antigravity」なのか？（vs Claude Code）</a></li><li class="toc-h3"><a href="#header-11">2.2 AIエディタとは何か（黒い画面の正体）</a></li><li class="toc-h3"><a href="#header-12">2.3 Antigravity と Gemini の関係</a></li><li class="toc-h3"><a href="#header-13">2.4 インストール（召喚の儀式）</a></li><li class="toc-h3"><a href="#header-14">2.5 画面の見方（図解）</a></li><li class="toc-h3"><a href="#header-15">2.6 ✅ 準備フェーズ チェックリスト</a></li><li class="toc-h2"><a href="#header-16">3章：武装フェーズ（AIを暴走させない）</a></li><li class="toc-h3"><a href="#header-17">3.1 Global Ruleとは何か（AIの憲法）</a></li><li class="toc-h3"><a href="#header-18">3.2 GEMINI.md を設定する（1分で終わります）</a></li><li class="toc-h3"><a href="#header-19">3.3 Node.js の役割（なぜ必要か）</a></li><li class="toc-h3"><a href="#header-20">3.4 インストールはAIに任せていい理由</a></li><li class="toc-h3"><a href="#header-21">3.5 判断しなくていいルール（OK / STOP）</a></li><li class="toc-h3"><a href="#header-22">3.6 作業フォルダの作り方（安全なアトリエ）</a></li><li class="toc-h3"><a href="#header-23">3.7 Antigravityで使用するフォルダを指定</a></li><li class="toc-h3"><a href="#header-24">3.8 ✅ 武装フェーズ チェックリスト</a></li><li class="toc-h2"><a href="#header-25">4章：練習フェーズ（5分で成功体験）</a></li><li class="toc-h3"><a href="#header-26">4.1 AIの実力を試す</a></li><li class="toc-h3"><a href="#header-27">4.2 作業場所を教える（重要）</a></li><li class="toc-h3"><a href="#header-28">4.3 おみくじアプリを作る</a></li><li class="toc-h3"><a href="#header-29">4.4 プレビューを見る</a></li><li class="toc-h3"><a href="#header-30">4.5 ワガママを言って改造する</a></li><li class="toc-h3"><a href="#header-31">4.6 ✅ 練習フェーズ チェックリスト</a></li><li class="toc-h2"><a href="#header-32">5章：本番フェーズ（MVP開発）</a></li><li class="toc-h3"><a href="#header-33">5.1 MVP思考とは何か</a></li><li class="toc-h3"><a href="#header-34">5.2 AIと企画会議をする</a></li><li class="toc-h3"><a href="#header-35">5.3 要件定義を保存する（ANTIGRAVITY.md）</a></li><li class="toc-h3"><a href="#header-36">5.4 少しずつ作る</a></li><li class="toc-h3"><a href="#header-37">5.5 Ver.2へ進む考え方</a></li><li class="toc-h3"><a href="#header-38">5.6 ✅ 本番フェーズ チェックリスト</a></li><li class="toc-h2"><a href="#header-39">6章：守りフェーズ（セキュリティ・規約）</a></li><li class="toc-h3"><a href="#header-40">6.1 なぜ守りが必要か</a></li><li class="toc-h3"><a href="#header-41">6.2 個人開発で最低限の守り</a></li><li class="toc-h3"><a href="#header-42">6.3 AIにリスク診断させる</a></li><li class="toc-h3"><a href="#header-43">6.4 利用規約・プライバシーポリシーを作る</a></li><li class="toc-h3"><a href="#header-44">6.5 ✅ 守りフェーズ チェックリスト</a></li><li class="toc-h2"><a href="#header-45">7章：記録フェーズ（Git / GitHub）</a></li><li class="toc-h3"><a href="#header-46">7.1 なぜ保存が必要か</a></li><li class="toc-h3"><a href="#header-47">7.2 Git / GitHub をゲームで理解する</a></li><li class="toc-h3"><a href="#header-48">7.3 リポジトリとは何か</a></li><li class="toc-h3"><a href="#header-49">7.4 プッシュとプル</a></li><li class="toc-h3"><a href="#header-50">7.5 GitHubでアカウント登録しよう（ちょっと正念場）</a></li><li class="toc-h3"><a href="#header-51">7.6 AIに保存を任せる</a></li><li class="toc-h3"><a href="#header-52">7.7 ✅ 記録フェーズ チェックリスト</a></li><li class="toc-h2"><a href="#header-53">8章：公開フェーズ（デプロイ）</a></li><li class="toc-h3"><a href="#header-54">8.1 なぜ Vercel なのか</a></li><li class="toc-h3"><a href="#header-55">8.2 GitHub と連携する意味</a></li><li class="toc-h3"><a href="#header-56">8.3 Vercelの登録</a></li><li class="toc-h3"><a href="#header-57">8.4 デプロイをAIに任せる</a></li><li class="toc-h3"><a href="#header-58">8.5 公開されたサイトを確認する</a></li><li class="toc-h3"><a href="#header-59">8.6 ✅ 公開フェーズ チェックリスト</a></li><li class="toc-h2"><a href="#header-60">９章【Q&amp;A】よくある質問コーナー</a></li><li class="toc-h3"><a href="#header-61">Q1. 本当に完全無料ですか？</a></li><li class="toc-h3"><a href="#header-62">Q2. 低スペックなPCでも大丈夫？</a></li><li class="toc-h3"><a href="#header-63">Q3. スマホやiPadでもできますか？</a></li><li class="toc-h3"><a href="#header-64">Q4. 英語が全く読めませんが平気ですか？</a></li><li class="toc-h3"><a href="#header-65">Q5. 作ったアプリはスマホで見れますか？</a></li><li class="toc-h2"><a href="#header-66">10章：おわりに（冒険の続き）</a></li><li class="toc-h3"><a href="#header-67">10.1 0地点の再確認</a></li><li class="toc-h3"><a href="#header-68">10.2 次のミッション</a></li><li class="toc-h3"><a href="#header-69">10.3 コメント欄の使い方</a></li></ul></div><hr><p><img src="/Users/kino/Developer/note-to-kindle/images/book_cover_vibe.jpg" alt="Vibe Coding Cover"></p>
+<h1>【完全無料】初心者向けVibe Coding入門</h1>
+<h2 id="header-1">AIと対話してアプリを作り、世界に公開する冒険の書</h2>
+<p><strong>プロローグ：コードが書けないからこそ、最強になれる</strong></p>
+<p>こんにちは、Kinoです。<br></p>
+<p>あなたは今、「プログラミングなんて難しそうだ」「自分にはセンスがない」と思っていませんか？
+実は、AI時代の今、その「素人感覚」こそが最強の武器になります。<br></p>
+<p>本書は、プログラミングを「勉強」するための本ではありません。<br>
+AIという最強の相棒といっしょに手を動かし、あなたのアイデアを形にして、世界に公開するための「冒険の書」です。<br></p>
+<h2 id="header-2">本書のクリア条件（ゴール）</h2>
+<p>本書のゴールは、「理解すること」ではなく**「公開すること」**です。<br>
+以下のクエストをクリアしたとき、あなたはもう立派な「Vibe Coder」です。<br></p>
+<div class="checklist-item"><span class="check-icon">✅</span> AIに日本語で頼みながらアプリを作る</div>
+<div class="checklist-item"><span class="check-icon">✅</span> 作ったコードを<strong>GitHubに保存</strong>（セーブ）する</div>
+<div class="checklist-item"><span class="check-icon">✅</span> <strong>Vercelで公開し、本物のURLを発行</strong>する</div>
+<div class="checklist-item"><span class="check-icon">✅</span> エラーが出ても<strong>「スクショ → AI相談」</strong>で前に進める</div>
+<p>準備はいいですか？
+それでは、冒険を始めましょう。<br></p>
+<div style="page-break-after: always;"></div>
+<h2 id="header-3">0章：まずはこれだけ（ゴール宣言）</h2>
+<h3 id="header-4">0.1 本書でできるようになること</h3>
+<p><img src="https://assets.st-note.com/img/1766824564-qYNXT6Uh2H8iZRGSVD0EjfCQ.jpg?width=1200" alt="画像"></p>
+<p>本書のゴールは、とてもシンプルです。<br></p>
+<ul>
+<li>
+<p>AIと対話しながら</p>
+</li>
+<li>
+<p>簡単なWebサイトやアプリを</p>
+</li>
+</ul>
+<p>-<strong>自分のPCで、実際に作れるようになること</strong></p>
+<p><img src="https://assets.st-note.com/img/1766878711-J8wix3RzTBD9rX6vMynUj0kI.png?width=1200" alt="画像"></p>
+<p>難しい理論や暗記はしません。<br><br>
+マンガ・図解・スクショ・実演を使って、<br>
+<strong>「迷わず手を動かせる構成」</strong>にしています。<br></p>
+<p>手順どおり進めるだけでOKです。<br></p>
+<p>▼ 迷ったら、目次から「今やりたい章」だけ進めてください。<br></p>
+<h2 id="header-5">1章：Vibe Codingという考え方（概念）</h2>
+<h3 id="header-6">1.1 Vibe Codingとは何か</h3>
+<p><img src="https://assets.st-note.com/img/1766823793-ZRhEWTyxUVKlu4vYtc2pBFeQ.jpg?width=1200" alt="画像"></p>
+<p>この記事で紹介するのが、<br>
+<strong>Vibe Coding（バイブ・コーディング）</strong>という考え方です。<br></p>
+<p>Vibe Codingとは、<br>
+<strong>AIと会話しながら開発を進める、新しい作り方。<br></strong></p>
+<p>従来のプログラミングは、<br>
+人間がコンピュータの言葉を正確に書く必要がありました。<br></p>
+<p>でも今は違います。<br></p>
+<p>あなたは<br>
+「何を作りたいか」「どうしたいか」を<br>
+<strong>日本語で伝えるだけ。<br></strong></p>
+<p>実際のコードや調整は、AIが担ってくれます。<br></p>
+<h3 id="header-7">1.2 なぜ初心者向きなのか</h3>
+<p><img src="https://assets.st-note.com/img/1766823947-AUZTaq5F0h8CcrKjpgJdyOuM.png?width=1200" alt="画像"></p>
+<p>-<strong>完全無料</strong>：高いスクール代も、有料ツールも不要</p>
+<p>-<strong>環境構築ほぼゼロ</strong>：面倒な初期設定に悩まされない</p>
+<p>-<strong>会話ベース操作</strong>：PC操作でも、やることは「日本語で頼む」だけ</p>
+<p>「コードを書く」というより、<br>
+<strong>AIにディレクションする感覚</strong>に近いかもしれません。<br></p>
+<p>この記事を読み終えたとき、<br>
+あなたは<strong>「プログラミングの0地点」</strong>に立ちます。<br></p>
+<p>0地点とは、<br>
+「完璧に理解している状態」ではありません。<br></p>
+<ul>
+<li>
+<p>エラーが出ても、慌てない</p>
+</li>
+<li>
+<p>分からなければ、スクショしてAIに聞ける</p>
+</li>
+<li>
+<p>止まっても、また前に進める</p>
+</li>
+</ul>
+<p>そんな<strong>挫折しないスタートライン</strong>のことです。<br></p>
+<h3 id="header-8">1.3 【重要】Vibe Codingの極意（失敗しない前提）</h3>
+<p>STEP 1に進む前に、<strong>これだけは絶対に覚えておいてください。<br></strong><br>
+これをやらないと、100%挫折します。<br></p>
+<p><strong>◼️自分で手を動かし、調べる（でも、独りじゃない）</strong></p>
+<p><img src="https://assets.st-note.com/img/1766824306-1i9oy4TLtI2uJdRgWNHsOjpr.jpg?width=1200" alt="画像"></p>
+<p>こんなNote書いておきながら矛盾するようですが、AIにコードを書いてもらうとしても、<strong>「自分で手を動かして、調べて、学ぶ姿勢」が一番大事です。<br></p>
+<p>「全部お任せ」ではなく、「どういう仕組み？」とAIに聞きながら、自分の知識として</strong>腹落ちさせていく。<br>これがVibe Codingの醍醐味です。<br></p>
+<p>とは言え、最初は壁があります。<br><br>
+特に<strong>環境設定</strong>などでは、<strong>英語の公式サイト</strong>を見たり、謎の英語エラーが出たりして、「うっ」となる瞬間があるでしょう。<br><strong>そこで「スクショ」の出番です。<br></strong>英語のページも、意味不明なエラー画面も、全部スクショしてAIに投げてください。<br><br>
+「これどういう意味？」「次は何ボタンを押せばいい？」と聞けば、AIが完璧な翻訳ガイドになってくれます。<br></p>
+<p>-<strong>❌</strong>英語だ、分からない、怖い…（思考停止）</p>
+<p>-<strong>⭕️ スクショして「解説して！」と投げる。<br></strong>（AIという最強の翻訳こんにゃくを使う）</p>
+<blockquote>
+<p><strong>【TIP/鉄則】</strong><br>
+<strong>「英語とエラーは、スクショで解決」</strong><br>
+悩む時間はゼロでいい。<br>浮いた時間で「中身の理解」に時間を使いましょう。<br></p>
+</blockquote>
+<p><strong>◼️ AIを「使い倒す」</strong></p>
+<p>遠慮は無用です。<br><br>
+「こんなこと聞いたら恥ずかしいかな…」<br>
+なんて思う必要はありません。<br></p>
+<p>彼は疲れを知らない執事です。<br><br>
+100回聞いても、100回優しく答えてくれます。<br><br>
+そして、あなたが雑なほど、仕事は速くなります。<br></p>
+<p>私はいつも、<br>
+「中学生でも分かるように解説して」<br>
+と頼んでいます。<br></p>
+<p>遠慮せず、雑に聞く。<br><br>
+それが、AIを最速で使いこなすコツです。<br></p>
+<p>必要な考え方は、ここまでで揃いました。<br><br>
+ここからは、実際にAIエディタ（後で解説）を使って、<br>
+Vibe Codingを始めます。<br></p>
+<h2 id="header-9">2章：準備フェーズ（AIと環境を整える）</h2>
+<h3 id="header-10">2.1 なぜ「Antigravity」なのか？（vs Claude Code）</h3>
+<p><img src="https://assets.st-note.com/img/1766825378-cZarg10CE4ROFhIJfwXU7vso.png?width=1200" alt="画像"></p>
+<p>この講座では、Googleが開発した<strong>「Antigravity」</strong>というAIエディタを使います。<br><br>
+世の中には多くのツールがありますが、<strong>初心者がVibe Codingを始めるなら、Antigravity一択</strong>です。<br></p>
+<p><img src="https://assets.st-note.com/img/1766825444-beLamoiInG1TSpu5V6Os2KYD.jpg?width=1200" alt="画像"></p>
+<p>理由はシンプル。<br><br>
+バイブコーディングは、<br>
+Claude Code や Codex（GPT系）でも実現できます。<br></p>
+<p>ただし――<br>
+多くの場合、<strong>有料</strong>だったり、<strong>最初の環境設定が難しかったり</strong>して、<br>
+「触る前に疲れる」のが正直なところです。<br></p>
+<p>Antigravityは違います。<br></p>
+<ul>
+<li>
+<p>完全無料</p>
+</li>
+<li>
+<p>面倒な環境設定ほぼなし</p>
+</li>
+<li>
+<p>インストールして、すぐ始められる</p>
+</li>
+</ul>
+<p>だから、<strong>考える前に触れる</strong>。<br></p>
+<p>この「一歩目の軽さ」こそが、<br>
+Vibe Codingが挫折せずに続く最大の理由です。<br></p>
+<p><strong>「まずは無料で、一番簡単なやつで始めたい」</strong></p>
+<p>そんなあなたにとって、これ以上の選択肢はありません。<br></p>
+<p><img src="https://assets.st-note.com/img/1766879155-OfFpL9E8VPQDmJqH1ze0nwAi.png?width=1200" alt="画像"></p>
+<h3 id="header-11">2.2 AIエディタとは何か（黒い画面の正体）</h3>
+<p><img src="https://assets.st-note.com/img/1766826409-ePuJpKwnYqWzMm1Njlhxd8LU.jpg?width=1200" alt="画像"></p>
+<p>いきなり「Antigravity」と言われても、<br>
+正直よく分かりませんよね。<br></p>
+<p>まずは結論から。<br><strong>AIエディタとは、<br>
+文章やコードを“自分で全部書かなくても”、<br>
+AIと一緒に編集できるエディタ</strong>です。<br></p>
+<p><strong>【普通のエディタとの違い】</strong></p>
+<p>Windowsの「メモ帳」や、<br>
+Macの「テキストエディット」を想像してください。<br></p>
+<p>あれは、<br>
+あなたがキーボードを叩かないと<br>
+一文字も進みません。<br></p>
+<p>でも、AIエディタは違います。<br></p>
+<p>画面の横に、常に<strong>AIが待機</strong>しています。<br></p>
+<p>あなたがやるのは、これだけ。<br></p>
+<ul>
+<li>
+<p>「ここ、もっと分かりやすくして」</p>
+</li>
+<li>
+<p>「この機能、追加したい」</p>
+</li>
+<li>
+<p>「エラー出た。<br>どうすればいい？」</p>
+</li>
+</ul>
+<p>するとAIが、</p>
+<p>「かしこまりました」</p>
+<p>と言って、<br>
+<strong>文字やコードを勝手に書き換えてくれる</strong>。<br></p>
+<p>この<br>
+<strong>「命令して、作ってもらう」</strong><br>
+というスタイルこそが、Vibe Codingの正体です。<br></p>
+<h3 id="header-12">2.3 Antigravity と Gemini の関係</h3>
+<p>ここで名前が2つ出てきますが、<br>
+覚え方はシンプルです。<br></p>
+<p>-<strong>Antigravity</strong>：作業する場所（お屋敷）</p>
+<p>-<strong>Gemini</strong>：考えて動くAI（執事）</p>
+<p>私たちは、<br>
+無料のAntigravityを使うだけで、<br>
+<strong>Google製の超優秀な執事（Gemini）</strong>を雇えます。<br></p>
+<p>しかも、難しい設定は不要。<br></p>
+<p>あなたが意識するのは、<br>
+<strong>「日本語で話しかける」</strong>ことだけです。<br></p>
+<p>つまりAntigravityのすごさは、</p>
+<ul>
+<li>
+<p>黒い画面をほぼ触らなくていい</p>
+</li>
+<li>
+<p>エラーを調べなくていい</p>
+</li>
+<li>
+<p>「直して」「追加して」と言うだけで進む</p>
+</li>
+</ul>
+<p>こと。<br></p>
+<p>これが、<br>
+<strong>「考える前に触れる」Vibe Coding</strong>を<br>
+本当に成立させている理由です。<br></p>
+<h3 id="header-13">2.4 インストール（召喚の儀式）</h3>
+<p><img src="https://assets.st-note.com/img/1766826843-h2g6qfjPHb7IVXSUDuREBKvx.png?width=1200" alt="画像"></p>
+<p>さあ、執事をあなたのPCに招き入れましょう。<br></p>
+<p>インストール手順は、こちらの記事が非常に分かりやすいです👇<br>
+（ここでは詳細説明を省きます）</p>
+<p><a href="https://antigravity.google/">Google Antigravity</a></p>
+<p>この記事を参考に、<br>
+<strong>インストール → Googleアカウントでログイン</strong>まで進めてください。<br></p>
+<p><strong>【TIP】途中でつまづいたら？</strong></p>
+<p>画面が違う、英語が分からない、意味不明な表示が出た──<br>
+そんな時は、<strong>迷わずスクショ</strong>です。<br></p>
+<p>その画面をChatGPTやGeminiに貼り付けて、<br>
+「これ、どうすればいい？」と聞いてください。<br></p>
+<p>悩む時間はゼロでOKです。<br></p>
+<h3 id="header-14">2.5 画面の見方（図解）</h3>
+<p>インストールお疲れ様でした。<br></p>
+<p>画面を開くと、英語だらけで少し怖いかもしれませんが、<br>
+<strong>覚える場所は４つだけ</strong>です。<br></p>
+<p><img src="https://assets.st-note.com/img/1766827474-VzG5aMT9YbL8ri471meInxhw.png?width=1200" alt="画像"></p>
+<p>① パソコン内のフォルダ構成<br>
+② 現在開いているテキスト（ファイル）<br>
+③ AIに指示・相談を入力するエリア<br>
+④ AIが考え、処理し、結果を返すエリア（チャット）</p>
+<p>Antigravityの特徴は、<br>
+<strong>右側で指示を出すと、必要に応じて現在開いているファイルの内容が自動で更新される</strong>点です。<br></p>
+<p>あなたがやるのは、「何をしたいか」を言葉で伝えることだけ。<br></p>
+<p>AIが裏側で判断・処理を行い、<br>
+結果としてファイルが更新されます。<br></p>
+<p>ちなみに、Antigravityの使い方や、画面の構成で分からない点が出てきたら、その都度、AIに聞きましょう。<br><br>
+（スクショ推奨！）</p>
+<p>分からないまま進む必要はありません。<br></p>
+<p><strong>▼Antigravityのもう少し詳しい使い方を解説した記事です。<br></strong></p>
+<h3 id="header-15">2.6 ✅ 準備フェーズ チェックリスト</h3>
+<p>🔲 Antigravityをインストールした</p>
+<p>🔲 Googleアカウントでログインした</p>
+<p>🔲 画面の3エリアの役割を理解した</p>
+<p>👉 ここまでチェックが付いたら、次の章へ進んでOKです。<br></p>
+<p>次は、この執事を<br>
+<strong>あなた好みの「最強の武器」に育てていきます。<br></strong></p>
+<h2 id="header-16">3章：武装フェーズ（AIを暴走させない）</h2>
+<p>インストールしたてのAIは、まだ「優秀だけど空気が読めない新人」です。<br><br>
+Vibe Codingをするために、彼に<strong>「最強の脳みそ」</strong>と<strong>「魔法のステッキ」</strong>を授けます。<br></p>
+<h3 id="header-17">3.1 Global Ruleとは何か（AIの憲法）</h3>
+<p><img src="https://assets.st-note.com/img/1766829581-4LqAG3JzeXfhEdlxDivcByUC.jpg?width=1200" alt="画像"></p>
+<p>これがAntigravityを使いこなすうえで、最重要ポイントです。<br></p>
+<p>まず大事な前提から。<br><br>
+これから設定する「 <a href="http://gemini.md/">GEMINI.md</a> （Global Rule）」は、<br>
+AIがこのプロジェクト内で必ず守る“憲法”です。<br></p>
+<p>ここに書かれたルールは、<br>
+AIの気分やノリよりも、常に優先されます。<br></p>
+<p>一度ここに定めておくことで、<br>
+AIは毎回それを前提に考え、行動するようになります。<br></p>
+<p>だからこそ、「最初にこの憲法を入れる」ことがめちゃくちゃ重要です。<br></p>
+<h3 id="header-18">3.2 <a href="http://GEMINI.md">GEMINI.md</a> を設定する（1分で終わります）</h3>
+<p><img src="https://assets.st-note.com/img/1766828864-IpqGwZ3KrLyWRPmNboT5vF9C.png?width=1200" alt="画像"></p>
+<ol>
+<li>画面右下の<strong>Settings</strong>をクリック。<br></li>
+<li>出てきたメニューから<strong>「Manage」</strong>をクリックし、<strong>「Rules」</strong>タブにある<strong>「+ Global」</strong>ボタンを押します。<br></li>
+<li>GEMINI.mdに、以下の「最強の呪文」を<strong>コピー＆ペースト</strong></li>
+<li>保存（読み込みボタンクリック）してください。<br></li>
+</ol>
+<p><strong>【コピペ用プロンプト (Global Rule)】</strong></p>
+<p>このGlobal Ruleは、AIを<br>
+「暴走させず、壊さず、話が通じる相棒」にするための設定です。<br></p>
+<p>これを設定しないと、AIは<br>
+-勝手に実装を進める<br>
+-英語で返してくる<br>
+-重要なファイルを確認なしで書き換える<br>
+といった行動を取りがちになります。<br></p>
+<p>最初にこの「憲法」を入れておくことで、<br>
+AIは必ず確認し、段階的に、安全に開発を進めるようになります。<br></p>
+<p>このルールは雛形です。<br><br>
+あなたの作業に応じて、Antigravityに質問しながら<br>
+自由にカスタマイズしてOKです。<br></p>
+<pre><code class="language-markdown"># AI Rules &amp; Guidelines (Vibe Coding &amp; Security Master)
+
+このファイルは、本プロジェクトにおけるAIアシスタント（あなた）の行動指針を定めたものです。<br>**最上位命令**として、コーディング・ライティングを問わず、全ての作業において以下のルールを常に遵守してください。<br>
+
+## 1. 開発開始の儀式：要件定義と \`ANTIGRAVITY.md\`
+
+-**ルール：独自の判断で実装を開始しない**ユーザーが新しいアプリ作成や新機能開発を希望した際は、即座にコードを書くのではなく、まず「要件定義プロンプト」を起動し、ヒアリングを開始すること。<br>
+    
+
+-**手順**:
+    
+    1. ユーザーに「目的、ターゲット、利用シーン」などを1つずつ質問する。<br>
+        
+    2. ヒアリング内容に基づき、そのプロジェクト専用の \`ANTIGRAVITY.md\` （プロジェクト憲法）を作成または更新すること。<br>
+       ※システム標準の \`task.md\`（短期タスク管理）とは明確に区別し、長期的・包括的な仕様書として運用する。<br>
+        
+    3. \`ANTIGRAVITY.md\` には「MVPの範囲」「技術スタック」「現在のステップ」を明記すること。<br>
+        
+
+## 2. 開発戦略：MVP（最小構成）原則
+
+-**ルール：段階的開発の徹底**複雑な実装であっても、常に「最小限の実用可能な製品（MVP）」から着手すること。<br>核となる機能のみの実行計画を提示し、動作確認（味見）が完了してから次の機能を肉付けすること。<br>
+    
+
+-**目的**: AIの記憶混濁を防ぎ、エラー特定を容易にし、最速で「動く体験」を提供するため。<br>
+    
+
+## 3. 安全管理 &amp; 非破壊操作の縛り
+
+-**ルール1：作業前の確認 (y/n)**ファイルの書き込み・変更・削除、および破壊的なプログラムの実行前に、必ず作業計画を報告し、「y/n」でユーザー確認を取ること。<br>
+- 例外: \`ls\`や\`cat\`、\`grep\`などの「非破壊的な読み取り・調査操作」については、開発テンポ（Vibe）を優先し、事後報告またはその場の判断で実行してもよい。<br>
+    
+
+-**ルール2：非破壊操作・セキュリティ制限（最上位縛り）**以下の操作を行う際は、必ずその理由とリスクを明示し、ユーザーの明確な個別許可を得ること。<br>
+    
+    - \`rm\`（削除）や \`sudo\`（管理者権限）を伴うコマンド。<br>
+        
+    - 機密ファイル（\`.env\`, \`id_rsa\` 等）の読み取りや変更。<br>
+        
+    - 既存のコードを広範囲に一括上書きする破壊的な変更。<br>
+        
+
+## 4. 全世界公開時の強制監査
+
+-**ルール：デプロイ・プッシュ前の「守りの三柱」提案**アプリを「全世界に公開」する操作の直前には、必ず以下の3点を自ら提案・監査し、承認を得ること。<br>
+    
+    1.**技術的防御 (RLS)**: 全てのDBテーブルに適切なRLS（行レベルセキュリティ）が設定されているか。<br>
+        
+    2.**法的防御 (規約等)**: 利用規約・プライバシーポリシー・特商法表記の設置。<br>
+        
+    3.**通信の安全 (HTTPS)**: 通信が暗号化（SSL）されているか。<br>
+        
+
+## 5. コミュニケーション &amp; ライティング (Conduct)
+
+-**言語**: 全て**日本語**で応答・記述すること。<br>
+    
+
+-**トーン**: 親しみやすく、論理的で分かりやすい説明。<br>必要に応じて「料理型開発」「お店の警備」などの比喩を用いること。<br>
+    
+
+-**構成**: 手順（How）の前に、必ず理由（Why）と完了後のベネフィットを提示すること。<br>
+    
+
+## 6. 運用・成果物 (Operations &amp; Outputs)
+
+-**ルール：完全日本語化** 
+    - チャットのタイトル付け、コード内のコメントは、原則として**日本語**で記述すること。<br>
+    -**システム表示の日本語化**: AIが提示する「タスク名」「実施内容（Task Status）」「進捗状況」などのシステムメッセージも、全て**日本語**で記述すること。<br>
+;yb
+</code></pre>
+<h3 id="header-19">3.3 Node.js の役割（なぜ必要か）</h3>
+<p><img src="https://assets.st-note.com/img/1766867712-elrdMsYtxyCX9zK273j06hDT.jpg?width=1200" alt="画像"></p>
+<p>次に、PCに「魔法（プログラム）」を使えるようにする儀式を行います。<br><br>
+このために必要なのが<strong>「Node.js（ノード・ジェイエス）」</strong>です。<br></p>
+<p>難しく考えなくて大丈夫です。<br><strong>「これがないと、そもそも始まらないやつ」</strong>だと思っておいてもらえればOKです。<br><br>
+実は、私たちが使っている<strong>JavaScript</strong>は、もともと<br>
+<strong>Webブラウザの中で動くために作られた言語</strong>でした。<br></p>
+<p>つまり以前は、</p>
+<ul>
+<li>
+<p>Chrome や Safari の中では動く</p>
+</li>
+<li>
+<p>でも PCそのものを動かすことはできない</p>
+</li>
+</ul>
+<p>──そんな制限があったんです。<br></p>
+<p>そこで登場したのが<strong>Node.js（ノード・ジェイエス）</strong>です。<br><br>
+Node.js は、<br>
+<strong>JavaScript をブラウザの外（PCやサーバー上）でも動かせるようにする実行環境</strong>。<br></p>
+<p>これを入れることで JavaScript は、</p>
+<ul>
+<li>
+<p>Webサイトの見た目を動かすだけでなく</p>
+</li>
+<li>
+<p>ファイル操作やサーバー処理など</p>
+</li>
+<li>
+<p>PCや裏側の処理も担当できる</p>
+</li>
+</ul>
+<p>ようになります。<br></p>
+<p>つまり Node.js は、<br>
+<strong>JavaScript の「活動範囲」を一気に広げる仕組み</strong>です。<br><br>
+そして、Node.js を入れる最大のメリットが<br>
+<strong>npm（エヌピーエム）</strong>という仕組みを使えるようになること。<br></p>
+<p>npm とは、</p>
+<ul>
+<li>
+<p>世界中の開発者が作った便利なプログラム部品を</p>
+</li>
+<li>
+<p>コマンド一発で追加できる</p>
+</li>
+</ul>
+<p><strong>JavaScript専用の部品倉庫</strong>です。<br></p>
+<p>ログイン機能、デザイン、アニメーション、開発ツール……<br>
+多くのものを<strong>ゼロから作る必要はありません</strong>。<br></p>
+<p>Node.js を入れるということは、<strong>JavaScriptで「アプリ開発ができる環境」を手に入れる</strong>という意味なんです。<br></p>
+<h3 id="header-20">3.4 インストールはAIに任せていい理由</h3>
+<p>🔴ここになんか図をいれておくかなー（なんでもいいので）<br>
+ここも、<strong>基本はすべてAIに任せてOK</strong>です。<br><br>
+この章のゴールは、ただ一つ。<br></p>
+<blockquote>
+<p><strong>Node.js が入り、魔法（npm / 開発コマンド）が使える状態になること</strong></p>
+</blockquote>
+<p>それ以外は、今この瞬間に完璧である必要はありません。<br><br>
+まずは、以下の<strong>呪文（プロンプト）</strong>を<br>
+そのまま<strong>チャット欄にコピペ</strong>してください。<br></p>
+<p><strong>■ コピペ用プロンプト</strong></p>
+<pre><code class="language-ruby">Web開発をしたいので、『Node.js』等のインストールを手伝ってください。<br>
+私の環境に合わせて、まずは一番簡単で確実な方法をナビゲートしてください。<br>
+作業前に y/n で確認してください。<br>
+不要・後回し可能なものは、その旨も教えてください。<br>
+</code></pre>
+<p>AIが、公式サイトへのリンクや、<br>
+あなたのPC環境（Mac / Windows）に合った手順を提示してくれます。<br><br>
+<strong>基本は、その指示どおり進めればOKです。<br></strong><strong>※この補足は Macを使っている人向け です。<br><br>
+Windowsの方は読み飛ばしてOK。<br></strong>Homebrewは、Macで開発を続けると<br>
+後からほぼ確実に登場する“道具箱管理アプリ”です。<br></p>
+<p>ただし、<strong>今この章では不要</strong>。<br><br>
+<strong>Node.js が入れば合格</strong>です。<br></p>
+<p>必要になったタイミングで、AIが理由つきで教えてくれるので、<br>
+その時に入れれば問題ありません。<br></p>
+<h3 id="header-21">3.5 判断しなくていいルール（OK / STOP）</h3>
+<p>分からない単語や、よく分からない提案が出たら、<br>
+<strong>その場で決断する必要はありません。<br></strong></p>
+<p>まずは、こう聞き返してください。<br></p>
+<blockquote>
+<p>それって<strong>今すぐ必要？</strong><br>
+<strong>後回しでも Node.js は動く？</strong><br>
+初心者でも<strong>安全？</strong><br>
+（スクショ貼って）これについて説明して。<br></p>
+</blockquote>
+<p>AIが、</p>
+<ul>
+<li>
+<p>「今は不要です」</p>
+</li>
+<li>
+<p>「後回しで問題ありません」</p>
+</li>
+<li>
+<p>「今回はスキップしてOKです」</p>
+</li>
+</ul>
+<p>と言ったものは、👉<strong>全部スキップしてOK</strong>。<br></p>
+<p><strong>OK / STOP の判断基準（これだけ覚えれば十分）</strong><br>
+⭕️OKしていいもの</p>
+<ul>
+<li>
+<p>Node.js</p>
+</li>
+<li>
+<p>Node.jsを動かすために「必須」と明確に言われたもの</p>
+</li>
+</ul>
+<p><strong>🌀迷ったら止めていいもの</strong></p>
+<ul>
+<li>
+<p>「あると便利です」</p>
+</li>
+<li>
+<p>「おすすめです」</p>
+</li>
+<li>
+<p>正体がよく分からない追加ツールや拡張機能</p>
+</li>
+</ul>
+<p><strong>まとめ（覚えるのはこの1行）</strong></p>
+<blockquote>
+<p>分からない提案は、<strong>全部「今はやらない」でOK</strong>。<br><br>
+必要になったら、その時またAIに聞けばいい。<br></p>
+</blockquote>
+<p>この章で、以下が満たせていれば合格です。<br></p>
+<ul>
+<li>
+<p>Node.js がインストールされている</p>
+</li>
+<li>
+<p>AIに「サーバー立ち上げて」と頼める状態になっている</p>
+</li>
+</ul>
+<p>それ以外は、<strong>あとから何度でも整えられます。<br></strong></p>
+<p>焦らず、AIと一緒に進みましょう。<br></p>
+<h3 id="header-22">3.6 作業フォルダの作り方（安全なアトリエ）</h3>
+<p><img src="https://assets.st-note.com/img/1766879453-2TAHyPKMRFnl18eE6dUN4Jwz.jpg?width=1200" alt="画像"></p>
+<p>最後に、<strong>誰にも邪魔されない「作業用フォルダ」</strong>を作ります。<br></p>
+<p>Antigravity（AIエディタ）は、<br>
+<strong>「どのフォルダで作業するか」を必ず指定して使うツール</strong>です。<br><br>
+つまり──<br>
+ここで決めるフォルダが、<br>
+あなたの<strong>開発専用アトリエ（基地）</strong>になります。<br><strong>⚠️ 注意：同期フォルダは絶対NG</strong>iCloud や OneDrive などの<br>
+<strong>同期フォルダの中には、絶対に作らないでください。<br></strong></p>
+<p>理由はシンプルです。<br></p>
+<ul>
+<li>
+<p>ファイルが大量に増える</p>
+</li>
+<li>
+<p>同期が終わらない</p>
+</li>
+<li>
+<p>PCが重くなる</p>
+</li>
+</ul>
+<p>👉<strong>「無限同期地獄」</strong>に落ちます。<br></p>
+<p><strong>「どこが安全か分からない！」人へ</strong></p>
+<p>大丈夫です。<br><br>
+<strong>ここもAIに任せましょう。<br></strong></p>
+<p>PCの設定や同期状態は人それぞれなので、<br>
+<strong>自分の環境に合わせてAIに聞くのが一番安全</strong>です。<br></p>
+<p><strong>場所探しの呪文（コピペ用）</strong></p>
+<p>以下を、そのまま<strong>チャット欄に貼り付けてください。<br></strong></p>
+<pre><code class="language-ruby">Antigravityで作業（Vibe Coding）をするために、
+専用の作業フォルダを自分で作りたいです。<br>
+
+iCloud・OneDrive などの 同期フォルダを避けて、
+Windows / Mac それぞれで安全な場所を教えてください。<br>
+
+コマンドは使わず、
+エクスプローラー（Windows）や Finder（Mac）など、
+画面操作だけで作る手順を説明してください。<br>
+</code></pre>
+<p>AIが、あなたのPC内で安全な場所<br>
+（例：ホームディレクトリ直下）<br>
+を教えてくれます。<br></p>
+<p>あとは、そこにフォルダーを作りましょう。<br></p>
+<p><strong>なぜフォルダ名は「Developer」？</strong></p>
+<p>おすすめする理由は3つです。<br></p>
+<p>-<strong>開発用だと一瞬で分かる</strong></p>
+<ul>
+<li>
+<p>将来プロジェクトが増えても使い回せる</p>
+</li>
+<li>
+<p>ネット記事・AIの説明と名前が一致しやすい</p>
+</li>
+</ul>
+<p>👉 迷わない名前＝事故が減ります。<br></p>
+<h3 id="header-23">3.7 Antigravityで使用するフォルダを指定</h3>
+<p>フォルダができたら、Antigravityで開きます。<br></p>
+<ol>
+<li>Antigravityのメニューから<br>
+「ファイル」 → 「フォルダーをワークスペースに追加」</li>
+<li>作業フォルダを指定</li>
+</ol>
+<p><img src="https://assets.st-note.com/img/1766868642-oRtJK3mq2rT9fhvzk6PNSnL1.png?width=1200" alt="画像"></p>
+<p><img src="https://assets.st-note.com/img/1766868700-jTG15gKqa3rwbmpz4sO2uS0D.png?width=1200" alt="画像"></p>
+<p><img src="https://assets.st-note.com/img/1766868809-g6dJVAK4rkc3FpZaiPTI1Hnb.png?width=1200" alt="画像"></p>
+<p>エクスプローラーに追加された</p>
+<h3 id="header-24">3.8 ✅ 武装フェーズ チェックリスト</h3>
+<p>🔲 Global Ruleを設定した</p>
+<p>🔲 Node.jsをインストールした</p>
+<p>🔲 安全な場所（Developerフォルダ）を作成した</p>
+<p>👉 ここまでチェックが付いたら、次の章へ進んでOKです。<br></p>
+<h2 id="header-25">4章：練習フェーズ（5分で成功体験）</h2>
+<p>〜5分で自分だけのアプリを作ってみる〜</p>
+<h3 id="header-26">4.1 AIの実力を試す</h3>
+<p>最強の武器（AI）を手に入れたら、すぐに試したくなりますよね？<br>
+まずは簡単な<strong>「おみくじアプリ」</strong>を作らせて、その実力を測ってみましょう。<br></p>
+<blockquote>
+<p><strong>なぜ「おみくじ」？</strong><br>
+実は今、この記事を書いているのが年末だからです（笑）。<br><br>
+もちろん、パズルゲームでも占いでも、あなたが「こんなのあったらいいな」と思う簡単なものなら何でもOKです。<br></p>
+</blockquote>
+<h3 id="header-27">4.2 作業場所を教える（重要）</h3>
+<p>ここ、<strong>かなり重要</strong>です。<br></p>
+<p>従来のプログラミングでは、<br>
+開発場所をターミナル（黒い画面）で指定する必要がありました。<br><br>
+でも、Antigravityでの Vibe Coding は違います。<br><strong>一番確実な方法はこれ👇</strong>さきほど作った Developer フォルダを<br>
+<strong>Antigravity右側のチャット欄にドラッグ＆ドロップ</strong></p>
+<p><img src="https://assets.st-note.com/img/1766799633-IgDmjFHdnBWl4yh5ukELC3o2.png?width=1200" alt="画像"></p>
+<p>これだけで、<br>
+<strong>AIは「このフォルダが作業場所だ」と正しく理解</strong>します。<br><br>
+そのうえで、こう宣言してください。<br></p>
+<blockquote>
+<p>このフォルダで開発します。<br>よろしく！</p>
+</blockquote>
+<p>※補足<br>
+実は、日本語で「このフォルダで作業したい」と伝えるだけでも通じることがあります。<br><br>
+ただし、<strong>初心者のうちはドラッグ＆ドロップが一番確実</strong>。<br><br>
+まずはこの方法を使いましょう。<br></p>
+<p>それでは、いよいよ開発スタートです。<br></p>
+<h3 id="header-28">4.3 おみくじアプリを作る</h3>
+<p>AIのチャット欄に、以下の呪文（プロンプト）を唱えてください。<br></p>
+<p><strong>■ コピペ用プロンプト (おみくじ作成)</strong></p>
+<pre><code class="language-ruby">Webブラウザで動く『おみくじアプリ』を作りたい。<br>
+ボタンを押すと、『大吉』『中吉』『凶』のどれかがランダムで表示されるようにして。<br>
+デザインは、日本の神社っぽい雰囲気で、赤と白を基調にして。<br>
+</code></pre>
+<p>AIが「承知しました！」と言って、猛烈な勢いでコードを書き始めます。<br></p>
+<p>先ほど、Glocal.ruleを設定したおかげで、「どんなユーザーに向けたおみくじですか？」「要件定義しましょうか？」と聞いてくるかもしれません。<br><br>
+その時は、ヒアリングを受けて、どのようなアプリにしたいか回答しましょう。<br></p>
+<p><img src="https://assets.st-note.com/img/1766799849-iDQzkbu3L1qSt2GWsjT56PCe.png?width=1200" alt="画像"></p>
+<p>もし、Accept（受け入れる）ボタンが出たら、クリックして承認しましょう。<br></p>
+<p>Antigravityがゴリゴリコードを書き始めます。<br><br>
+しばし、待ちましょう。<br></p>
+<p>…できあがりました!</p>
+<p><img src="https://assets.st-note.com/img/1766799971-vt5gWYlDNUkjOL0nE69Xroyf.png?width=1200" alt="画像"></p>
+<p>AIからの回答</p>
+<h3 id="header-29">4.4 プレビューを見る</h3>
+<p>コードが書けたら、次は<br>
+「ちゃんと動いているか」をブラウザで確認します。<br><br>
+これを<strong>プレビュー</strong>と呼びます。<br></p>
+<p><strong>まず結論（ここだけ覚えて）</strong></p>
+<p>👉 プレビューしたい、とAIに頼めばOKです。<br></p>
+<p>あなたが<br>
+黒い画面に何かを打ち込む必要はありません。<br></p>
+<p><strong>そもそも何が起きているの？</strong></p>
+<p>本来、Web開発では<br>
+「開発サーバー」というものを起動して、<br>
+自分のPCの中に<strong>一時的なお店</strong>を開く必要があります。<br></p>
+<p>そのときに使われる代表的なコマンドが、</p>
+<pre><code class="language-ruby">npm run dev
+</code></pre>
+<p>です。<br></p>
+<p>このコマンドは、例えるなら<br>
+「お店を開けてください」という呪文。<br></p>
+<p><strong>でも、Vibe Codingでは？</strong></p>
+<p>安心してください。<br></p>
+<p>Vibe Codingでは、<strong>あなたがこの呪文を覚える必要はありません。<br></strong>その代わりに、<strong>執事（AI）に唱えさせます。<br></strong>やることは、これだけ</p>
+<p><strong>■ コピペ用プロンプト</strong></p>
+<pre><code class="language-ruby">サーバーを立ち上げて（プレビューを見せて）
+</code></pre>
+<p>すると、どうなるか。<br><br>
+AIが裏側で、</p>
+<ul>
+<li>
+<p>npm run dev などの必要なコマンドを実行し</p>
+</li>
+<li>
+<p>プレビュー用のURLを表示してくれます</p>
+</li>
+</ul>
+<p>例：</p>
+<pre><code class="language-javascript">http://localhost:3000
+</code></pre>
+<p><strong>あなたがやること</strong></p>
+<ol>
+<li>表示された<strong>URLをクリック</strong></li>
+<li>ブラウザが開く</li>
+<li>さっき作った画面が表示される</li>
+</ol>
+<p>👉<strong>これで成功です。<br></strong></p>
+<p>※ 何かをダウンロードする必要はありません<br>
+※ URLを開くだけでOKです</p>
+<p><img src="https://assets.st-note.com/img/1766800475-AkNWJzlBrEovSqH1dfRuxVtX.png?width=1200" alt="画像"></p>
+<p>AIからリンクが返ってきました</p>
+<p><img src="https://assets.st-note.com/production/uploads/images/239161073/picture_pc_df6f9f5a6cb9b6513c48dfc35e042a09.gif?width=1200" alt="画像"></p>
+<p>アプリを確認してみましょう</p>
+<p><strong>…どうですか？</strong><br>
+ボタンを押すと「大吉」が出たりしましたか？<br>
+あなたが言った通りの「神社風おみくじ」が、一瞬で出来上がったはずです！</p>
+<h3 id="header-30">4.5 ワガママを言って改造する</h3>
+<p>ここからが本番です。<br><br>
+AIが作ったものに、文句（修正指示）をつけてみましょう。<br></p>
+<p><strong>■ コピペ用プロンプト（アレンジ例）</strong></p>
+<pre><code class="language-ruby">「デザインが地味！ もっとネオン風のサイバーパンクな感じにして！」
+「大吉、大凶の際、ド派手なエフェクトを出して」
+</code></pre>
+<p>ちなみに、<strong>ここでエラーが出てもまったく問題ありません。<br></strong></p>
+<p>たとえば<br>
+<strong>「このサイトにアクセスできません」</strong><br>
+と表示された場合、それは──</p>
+<p><img src="https://assets.st-note.com/img/1766802508-hB2MDw5Wq8gZx3dmbJz7OjtT.png?width=1200" alt="画像"></p>
+<p>👉<strong>開発サーバー（お店）が止まった／消えた</strong><br>
+という意味です。<br></p>
+<p>あなたのPCやコードが壊れたわけではありません。<br><br>
+<strong>「今、お店が閉まってますよ」</strong>というお知らせなだけです。<br></p>
+<p>くどいようですが、思い出してほしいのは、たった一つの行動ルール。<br></p>
+<p><strong>「なんかおかしい」→ 迷わずAIに聞く。<br></strong></p>
+<p>この画面が出たら、<br>
+そのままスクショしてAIに投げましょう。<br></p>
+<p>「どうすればいい？」</p>
+<p>と聞けば、<br>
+<strong>再起動の方法や直し方を、あなたの状況に合わせてすぐ教えてくれます。<br></strong></p>
+<p>エラーは失敗ではありません。<br><br>
+<strong>Vibe Codingでは、全部“会話の材料”です。<br></strong></p>
+<p>はい、そして、サイバーなおみくじアプリが完成しましたね！</p>
+<p><img src="https://assets.st-note.com/production/uploads/images/239164392/picture_pc_6cee3cb64f2cbcdb88e299ef2ca151a0.gif?width=1200" alt="画像"></p>
+<p>この<strong>「ワガママを言う」→「一瞬で叶う」</strong></p>
+<p>という快感。<br>これがVibe Codingの正体です。<br></p>
+<p><strong>【休憩】お疲れ様でした！</strong></p>
+<p>自分の思い通りにアプリが動く感動、味わえましたか？</p>
+<p>(音楽)「すごい！ これ友達に見せたい！ URL送ろう！」</p>
+<p>と思った方、ごめんなさい。<br>実は今のURL (`localhost`) は、あなたのPCの中でしか見られない<strong>「鍵付きの秘密基地」</strong>なんです。<br></p>
+<p>世界中に公開してドヤ顔する方法は、<strong>STEP 5</strong>でバッチリ解説します。<br><br>
+それまでは、もう少しだけこの秘密基地で、今度は「自分だけのオリジナルアプリ（MVP）」を作る実験をしてみましょう。<br></p>
+<p>練習はここまで。<br>次はいよいよ「本番」です。<br></p>
+<h3 id="header-31">4.6 ✅ 練習フェーズ チェックリスト</h3>
+<p>🔲 おみくじアプリのコードを生成させた</p>
+<p>🔲 プレビュー画面を開いて動作確認した</p>
+<p>🔲 「ワガママ」を言ってデザインを変更させた</p>
+<p>👉 ここまでチェックが付いたら、次の章へ進んでOKです。<br></p>
+<h2 id="header-32">5章：本番フェーズ（MVP開発）</h2>
+<p>〜「欲しいもの」を形にする思考法〜</p>
+<p>練習試合で感覚は掴めましたか？<br>
+次はついに本番。<br>ここからは、教科書的な例題ではありません<strong>実際に私が今、本当に作ろうとしている「AIマンガ公開サイト」の開発過程を、リアルタイムでお見せします。<br></strong>実は私、最近AIを使って漫画を描き始めたんです（楽しい！）。<br><br>
+でも、SNSに投稿するだけだと、過去の作品がどんどんタイムラインに埋もれてしまうのが悩みでした…。<br></p>
+<p>そこで思いついたのが、これです。<br><br>
+<strong>「自分の作品をきれいに並べて読める、専用のマンガ図書館（Webサイト）を作りたい！」</strong></p>
+<p>ここからは、私が「作りたい！」と思ったこのアイデアを、AIと一緒にどうやって形にしていくのか。<br><br>
+その<strong>試行錯誤のプロセス</strong>をそのままお伝えします。<br><br>
+皆さんも、自分の「作りたいもの」に置き換えて見てください。<br></p>
+<h3 id="header-33">5.1 MVP思考とは何か</h3>
+<p><img src="https://assets.st-note.com/img/1766880212-MJoHT4YvLOuKni9WZpGQNqk0.png?width=1200" alt="画像"></p>
+<p>初心者が一番やってしまう失敗。<br><br>
+（というか、これは<strong>いつもの私のデフォルト</strong>なんですけど…泣）</p>
+<p>それは<strong>「いきなり豪華客船を作ろうとして沈没する」</strong>ことです。<br></p>
+<p>開発を始めると、楽しくなってきちゃうんですよね。<br><br>
+AIという魔法使いがいるから、「あ、これも付けたい」「会員登録も欲しい」「ランキングも！」と、アイデアが無限に溢れて止まらなくなります。<br></p>
+<p><strong>そして、アプリを「デコる」ことに何時間も時間を溶かしてしまい、気づけばコードは複雑化し、エラーまみれで動かなくなる…。<br></strong><br>
+（私も何度これをやって枕を濡らしたことか…）</p>
+<p>これを防ぐのが<strong>MVP (Minimum Viable Product)</strong>という考え方です。<br><br>
+日本語で言えば<strong>「浮き輪から作れ」</strong>です。<br></p>
+<ol>
+<li>まず「水に浮く物（浮き輪）」を作る。<br></li>
+<li>浮いたら「オール」をつける。<br></li>
+<li>進めるようになったら「帆」をつける。<br></li>
+</ol>
+<p>これが、<strong>失敗せずに前に進むための作り方</strong>です。<br></p>
+<p><strong>⬇︎わたしの失敗談をまとめたnoteです。<br></strong></p>
+<h3 id="header-34">5.2 AIと企画会議をする</h3>
+<p>では、どうやって「浮き輪」を見つけるのか？<br>
+<strong>AIに相談して決めてもらいましょう。<br></strong><br>
+以下のプロンプトを投げて、AIと<strong>「企画会議」</strong>をしてください。<br></p>
+<p>ここで一つ、とても大事な仕様を共有しておきます。<br></p>
+<p>この後、AI（Gemini）は<br>
+<strong>必ずあなたに質問をしてきます。<br></strong></p>
+<p>これは気まぐれでも、親切心でもありません。<br><strong><a href="http://GEMINI.md">GEMINI.md</a> に、そう書いたからです。<br></strong><img src="https://assets.st-note.com/img/1766882765-ykdfL2W1RBTS03XYMJUgQNCq.png?width=1200" alt="画像"></p>
+<p><a href="http://GEMINI.md">GEMINI.md</a> には、<br>
+「新しい開発や機能追加に入る前は、必ず要件定義を行うこと」<br>
+というルールが定義しました。<br></p>
+<p>そのためAIは、<br>
+<strong>勝手に作り始めることを禁止されています。<br></strong></p>
+<p>つまり──<br>
+👉<strong>聞いてくるのは仕様です。<br></strong>もちろん、毎回ヒアリングされるのが面倒な人もいるでしょう。<br><br>
+もし、この仕様を使わない場合は、以下のプロンプトを投げかけてください。<br></p>
+<pre><code class="language-ruby">これからアプリを作りたいです。<br>
+ただし私はプログラミング初心者で、要件定義のやり方がよく分かりません。<br>
+
+なのであなたには、
+「企画会議の相手役」として手伝ってほしいです。<br>
+
+目的は、&lt;strong&gt;まず最小限で動くもの（MVP）を決めること&lt;/strong&gt;です。<br>
+完璧な設計や将来の話は、今はやりません。<br>
+
+進め方のルールがあります。<br>
+
+【進め方】
+
+1. まずは「どんなアプリを作りたいか」を、ざっくり聞いてください
+2. そのあと、目的・使う人・使う場面などを、&lt;strong&gt;1つずつ&lt;/strong&gt;質問してください
+3. 機能については、
+- 「最初に絶対必要なもの（MVP）」
+- 「余裕が出たら追加したいもの（後回し）」
+     に分けて整理してください
+4. 最後に、ここまでの内容をまとめて
+   &lt;strong&gt;シンプルな要件定義メモ&lt;strong&gt;として提示してください&lt;/strong&gt;
+【大事な前提】
+-正解を出そうとしなくてOK
+-途中で「やっぱ違う」と思ったら修正してOK
+-質問は必ず1つずつ、やさしい言葉でしてください
+-技術用語は使わず、「使う人の目線」で考えてください
+
+準備ができたら、
+最初の質問から始めてください。<br>&lt;/strong&gt;
+</code></pre>
+<p>こうした条件を自分の言葉で先にまとめて伝えておくと、<br>
+<strong>AIはその内容を前提にヒアリングを始めます。<br></strong></p>
+<p><strong>初心者におすすめなのは？</strong></p>
+<p>結論から言うと、<br>
+<strong>最初はこの「聞いてくる仕様」に、全部乗っかってください。<br></strong></p>
+<p>理由はシンプルです。<br></p>
+<ul>
+<li>
+<p>考え漏れを防げる</p>
+</li>
+<li>
+<p>作る途中で迷子にならない</p>
+</li>
+<li>
+<p>「何を作っているのか分からない状態」を回避できる</p>
+</li>
+</ul>
+<p>このヒアリングは、<br>
+<strong>あなたを止めるためのブレーキではなく、守るためのガードレール</strong>です。<br></p>
+<p>それでは、私の実際のやり取りを貼っていきます。<br></p>
+<p><img src="https://assets.st-note.com/img/1766806825-qLe4tbXSETUiOumoR38K9HAf.png?width=1200" alt="画像"></p>
+<p>まずは相談</p>
+<p><img src="https://assets.st-note.com/img/1766806881-rIpuXjiFUPgvleG8QZwEWh9O.png?width=1200" alt="画像"></p>
+<p>AIからの問いかけが始まる</p>
+<p><img src="https://assets.st-note.com/img/1766806915-f6p9USNQE3m1ydMGt4hPgvnH.png?width=1200" alt="画像"></p>
+<p>ヒアリング開始</p>
+<p>こうやって、AIに<strong>ブレーキを踏んでもらう</strong>のがコツです。<br></p>
+<h3 id="header-35">5.3 要件定義を保存する（<a href="http://ANTIGRAVITY.md">ANTIGRAVITY.md</a>）</h3>
+<p><img src="https://assets.st-note.com/img/1766883623-9uEjV6pst1fLXRc5xFy3AU7i.png?width=1200" alt="画像"></p>
+<p>今回作成した要件定義書「<a href="http://ANTIGRAVITY.md">ANTIGRAVITY.md</a>」</p>
+<p>ヒアリングが終わると、AIが「要件定義書」をまとめてくれます。<br><br>
+これをコピーして、<strong>`ANTIGRAVITY.md`</strong>という名前のファイル（プロジェクト憲法）として保存しましょう。<br><br>
+（実際は、AIが格納してくれます）</p>
+<p>これで、AIはこのファイルを「絶対守るべきルール」として認識します。<br></p>
+<p><img src="https://assets.st-note.com/img/1766806982-AujTYbtkLzn103FRBNHhe7ol.png?width=1200" alt="画像"></p>
+<p>今回のプロジェクトフォルダの直下に格納します</p>
+<h3 id="header-36">5.4 少しずつ作る</h3>
+<p>あとは、設計図を元にAIに作らせるだけです。<br><br>
+ここでもコツは<strong>「一気に作るな」</strong>です。<br></p>
+<blockquote>
+<p><strong>悪い例</strong>: 「 <a href="http://antigravity.md/">ANTIGRAVITY.md</a> の通りに全部作って！」<br>
+<strong>良い例</strong>: 「 <a href="http://antigravity.md/">ANTIGRAVITY.md</a> の機能のうち、まずは『トップページの表示』だけ作って。<br>」</p>
+</blockquote>
+<p>一つ作っては、ブラウザ で確認。<br>動いたら、次を作る。<br>これの繰り返しです。<br></p>
+<p>ここからは、筆者が実際にAIと対話しながら「マンガサイト」を作っていく様子を、包み隠さず公開します。<br><br>
+（エラーが出たり、AIと喧嘩している様子も含めてご覧ください）</p>
+<p><img src="https://assets.st-note.com/img/1766811136-HWKp2IdvxjoXc0LwnAZ7kJ4G.png?width=1200" alt="画像"></p>
+<p>AIから叩き台を作成したと報告があった</p>
+<p><img src="https://assets.st-note.com/production/uploads/images/239178413/picture_pc_e8074d42710ec596db0b891de0d9a123.gif?width=1200" alt="画像"></p>
+<p>ブラウザで確認。<br>まだ荒い。<br></p>
+<p><img src="https://assets.st-note.com/img/1766884413-vUiuJh80K6DWFMYEkrRO2tLn.png?width=1200" alt="画像"></p>
+<p>ちなみに、開発のときは<br>
+画面左３／４にブラウザを<br>
+画面１／４にAntigravityのチャット欄を配置するのが個人的なお気に入りです。<br></p>
+<p>修正指示→すぐに確認がシームレスに行えます。<br></p>
+<p>なお、画面の大きさの変更もRaycastというアプリでショートカットキーを登録しています。<br><br>
+もしよかったら参考にしてください。<br></p>
+<p><img src="https://assets.st-note.com/img/1766811476-6DbIZBGMASEKjdt3Rcr02pJq.png?width=1200" alt="画像"></p>
+<p>まずは、画像を変えたい。<br>よって、画像を保存するフォルダをつくってもらう。<br></p>
+<p><img src="https://assets.st-note.com/img/1766811440-nz9olIDbfdHU3Q4Kc5ksLrYO.png?width=1200" alt="画像"></p>
+<p>AIがフォルダを作ってくれた。<br></p>
+<p><img src="https://assets.st-note.com/img/1766811678-JG9xXC4fiIrqUF1M5jBDZN3a.png?width=1200" alt="画像"></p>
+<p>ここに画像を放り込んで、AIに「トップページに使って」などとお願いしていく。<br></p>
+<p><img src="https://assets.st-note.com/img/1766811897-XQxWf4jCidBIVKytMeuDqF31.png?width=1200" alt="画像"></p>
+<p>どんどん開発していきます。<br></p>
+<p><img src="https://assets.st-note.com/img/1766811432-ZFYAjR0EOwHlx475zcskPfnC.png?width=1200" alt="画像"></p>
+<p>漫画のリンクを挿入するよう依頼</p>
+<p><img src="https://assets.st-note.com/img/1766811413-hfRgDGtAIrXObvzdMW9Fpmcn.png?width=1200" alt="画像"></p>
+<p>youtubeへのリンクもつけてもらう</p>
+<p><img src="https://assets.st-note.com/img/1766811978-Y3KXZxdyQUjoDbFqrOWcp9na.png?width=1200" alt="画像"></p>
+<p>途中、画面がバグったりもするwww</p>
+<p><img src="https://assets.st-note.com/img/1766812015-8qlt5TfE3mkH4pPZsFoQCv16.png?width=1200" alt="画像"></p>
+<p>めっちゃ謝られる</p>
+<p><img src="https://assets.st-note.com/img/1766812059-sdXLM9CD7nmTFclbqKPQBgUV.png?width=1200" alt="画像"></p>
+<p>ある程度まで完成しました。<br></p>
+<p><img src="https://assets.st-note.com/img/1766884600-cBilgSOUYqWG80m7eAjLN4dt.png?width=1200" alt="画像"></p>
+<p>だいぶいい感じなりました。<br>MVP達成！</p>
+<h3 id="header-37">5.5 Ver.2へ進む考え方</h3>
+<p>無事に「浮き輪（MVP）」が完成したら、いよいよ<strong>「デコる」</strong>時間です！<br>
+我慢していた「豪華客船への改造」を始めましょう。<br></p>
+<p>1.<strong>設計図を更新</strong>: AIと対話をしつつ、`ANTIGRAVITY.md` に新機能の予定を記載する
+2.<strong>再指示</strong>: 「設計図を更新しました。<br>これに従って機能を追加してください」とAIに依頼する。<br></p>
+<p>こうやって、浮き輪をボートにし、ボートをクルーザーにしていく。<br><br>
+この<strong>「進化の過程」を楽しむ</strong>ことが、Vibe Codingの醍醐味です。<br></p>
+<p><img src="https://assets.st-note.com/img/1766885130-pfgSL4iuW5xYCH1j7kmZlPzK.png?width=1200" alt="画像"></p>
+<p>AIから提案を受けました</p>
+<p><img src="https://assets.st-note.com/img/1766885139-GD9vzbnEQA7o64mOusTVaHWj.png?width=1200" alt="画像"></p>
+<p>いいね！と思うものを、今後実装することに。<br></p>
+<p><img src="https://assets.st-note.com/img/1766885151-CxzBRh7QErdVM8aUF0HO6ZgA.png?width=1200" alt="画像"></p>
+<p>ANTIGRAVITY.mdを更新してもらう。<br>今後、この方針で開発を行う。<br></p>
+<h3 id="header-38">5.6 ✅ 本番フェーズ チェックリスト</h3>
+<p>🔲 AIと企画会議をして「MVP」を決めた</p>
+<p>🔲 要件定義書「<strong><a href="http://ANTIGRAVITY.md">ANTIGRAVITY.md</a>」</strong>を保存した</p>
+<p>🔲 MVPを達成できた</p>
+<p>👉 ここまでチェックが付いたら、次の章へ進んでOKです。<br></p>
+<h2 id="header-39">6章：守りフェーズ（セキュリティ・規約）</h2>
+<p>〜作ったものを全世界へ配信し、ドヤ顔する〜</p>
+<h3 id="header-40">6.1 なぜ守りが必要か</h3>
+<p><img src="https://assets.st-note.com/img/1766887077-ut8sxJRL0p5vw1rEyDbjUgZl.jpg?width=1200" alt="画像"></p>
+<p>世界中に公開するということは、<br>
+<strong>「どんな使われ方をするか分からない」</strong>ということでもあります。<br></p>
+<p>悪意があるかどうかに関係なく、</p>
+<ul>
+<li>
+<p>想定外の入力をされる</p>
+</li>
+<li>
+<p>変な使い方をされる</p>
+</li>
+<li>
+<p>トラブルに発展する</p>
+</li>
+</ul>
+<p>──こうした可能性は、ゼロにはなりません。<br></p>
+<p>だからこそ、公開前に<br>
+<strong>最低限の「守り」</strong>を用意しておく必要があります。<br></p>
+<p>ここでは、AIを使って<strong>安全性を担保しつつ、安心して公開できるかを判断するための考え方</strong>を解説します。<br></p>
+<h3 id="header-41">6.2 個人開発で最低限の守り</h3>
+<p>正直に言います。<br></p>
+<p>セキュリティや法務を突き詰め始めると、<br>
+やることは無限にあります。<br></p>
+<p>ですがこのステップでは、<br>
+<strong>個人開発で最低限必要な範囲</strong>に絞ります。<br><br>
+今回用意するのは、次の<strong>2つの盾</strong>だけです。<br><strong>① プライバシーポリシー</strong>（情報の取り扱い説明書）</p>
+<p>プライバシーポリシーは、</p>
+<blockquote>
+<p>ユーザーが入力した情報を、どう扱うのか</p>
+</blockquote>
+<p>を宣言する文章です。<br><br>
+たとえば、</p>
+<ul>
+<li>
+<p>入力されたデータを保存するのか</p>
+</li>
+<li>
+<p>第三者に渡すことはあるのか</p>
+</li>
+<li>
+<p>解析や広告に使うのか</p>
+</li>
+</ul>
+<p>といった点を、正直に書きます。<br><br>
+「何も保存しません」<br>
+「個人情報は扱いません」<br>
+──それでも構いません。<br></p>
+<p><strong>書いてあること自体が、安心材料</strong>になります。<br><strong>② 利用規約</strong>（アプリのルールブック）</p>
+<p>利用規約は、</p>
+<blockquote>
+<p>このアプリを使うときの約束事</p>
+</blockquote>
+<p>をまとめたものです。<br></p>
+<ul>
+<li>
+<p>迷惑行為は禁止</p>
+</li>
+<li>
+<p>想定外の使われ方をした場合の責任範囲</p>
+</li>
+<li>
+<p>不具合が起きたときの免責</p>
+</li>
+</ul>
+<p>これらを明記することで、<strong>ユーザーだけでなく、あなた自身も守られます。<br></strong><strong>ここを曖昧にするとどうなる？</strong></p>
+<p>プライバシーポリシーも利用規約もないアプリは、</p>
+<ul>
+<li>
+<p>信頼されにくい</p>
+</li>
+<li>
+<p>「お試しのおもちゃ」扱いされやすい</p>
+</li>
+</ul>
+<p>というのが現実です。<br><br>
+逆に言えば、この2つがあるだけで、<br>
+「ちゃんと考えて作られている個人開発」として見てもらえます。<br></p>
+<p>ここで一つ、大事なことを共有しておきます。<br><strong>あなたのアプリにどんなリスクがあるかを考えるのは、<br>
+本来は開発者自身の役割です。<br></strong>ただし、最初から全部を把握できる人はいません。<br></p>
+<ul>
+<li>
+<p>どこが危ないのか分からない</p>
+</li>
+<li>
+<p>そもそも何を気にすればいいか分からない</p>
+</li>
+</ul>
+<p>それが普通です。<br></p>
+<p><strong>だからこそ、AIに相談する</strong></p>
+<p>ここでも、一人で抱え込む必要はありません。<br><br>
+AIは<br>
+<strong>「一人法務部」兼「リスク洗い出し係」</strong><br>
+として使えます。<br></p>
+<p>いきなり文章を書かせる前に、<br>
+まずこう聞いてみましょう。<br></p>
+<blockquote>
+<p>このアプリには、どんなリスクが考えられますか？</p>
+</blockquote>
+<p>それだけで、</p>
+<ul>
+<li>
+<p>見落としがちなポイント</p>
+</li>
+<li>
+<p>最低限考えるべき注意点</p>
+</li>
+</ul>
+<p>を整理してくれます。<br></p>
+<h3 id="header-42">6.3 AIにリスク診断させる</h3>
+<p>法律の専門知識は不要です。<br></p>
+<p>まずは<strong>診断</strong>、その次に<strong>文章作成</strong>。<br><br>
+この順番が安全です。<br><br>
+次のプロンプトを使えば、AIが</p>
+<ul>
+<li>
+<p>リスクの洗い出し</p>
+</li>
+<li>
+<p>注意点の整理</p>
+</li>
+<li>
+<p>プライバシーポリシー案</p>
+</li>
+<li>
+<p>利用規約案</p>
+</li>
+</ul>
+<p>を、あなたの状況に合わせて提示してくれます。<br></p>
+<p><strong>■ コピペ用プロンプト（リスク検証 &amp; 作成）</strong></p>
+<pre><code class="language-ruby">このWebアプリを、個人開発として全世界に公開したいと考えています。<br>
+
+まず、
+-このアプリに考えられるリスクを洗い出し、
+-公開前に最低限気をつけるべきポイントを
+初心者にも分かる言葉で、箇条書きで整理してください。<br>
+
+【前提】
+-個人の学習・趣味開発です
+-ログイン機能はありません
+-個人情報（名前・メールアドレス等）は扱いません
+-収益化や広告はありません
+-日本向けですが、海外からもアクセス可能です
+
+そのうえで、
+-最低限用意した方がよい「利用規約」
+-最低限用意した方がよい「プライバシーポリシー」
+があれば、理由とあわせて提案してください。<br>
+</code></pre>
+<p><img src="https://assets.st-note.com/img/1766886350-CFo7SvZsE8LUVenaX3cK52jy.png?width=1200" alt="画像"></p>
+<p>AIがリスクを分析してくれる</p>
+<h3 id="header-43">6.4 利用規約・プライバシーポリシーを作る</h3>
+<p>リスクを確認したら、AIにアプリへの対策をとってもらいましょう。<br></p>
+<p><img src="https://assets.st-note.com/img/1766886362-9Ueg3fJjH2ubYc7RNPBI1Z4F.png?width=1200" alt="画像"></p>
+<p>対応をお願いする（なぜか敬語）</p>
+<p><img src="https://assets.st-note.com/img/1766886779-DW6xzvbrRnjOuNl3ctsBpq2P.png?width=1200" alt="画像"></p>
+<p>プライバシーポリシー、利用規約が実装されました。<br></p>
+<p>ここまでできれば、<br>
+あなたのアプリは<strong>「公開しても大丈夫な状態」</strong>に一歩近づきます。<br></p>
+<p>ただし、実際の公開・運用については、<br>
+<strong>最終的な判断と責任はご自身にある</strong>という点だけ、忘れないでください。<br></p>
+<p>このあたりを意識できていれば、<br>
+個人開発としては十分に「安全側」に立てています。<br></p>
+<p>次は、その成果を失わないための<strong>「記録」</strong>に進みましょう。<br></p>
+<h3 id="header-44">6.5 ✅ 守りフェーズ チェックリスト</h3>
+<p>🔲 なぜ「守り（セキュリティ・規約）」が必要なのか説明できる</p>
+<p>🔲 自分のアプリに<strong>どんなリスクがありそうか</strong>をAIと一緒に洗い出した</p>
+<p>🔲 利用規約・プライバシーポリシーの<strong>役割の違い</strong>が分かっている</p>
+<p>🔲 AIに相談して、<strong>自分のアプリ用の文章案</strong>を作れた</p>
+<p>🔲 公開前に<strong>一度立ち止まって確認する癖</strong>がついた</p>
+<p>👉 ここまでチェックが付いたら、次の章へ進んでOKです。<br></p>
+<h2 id="header-45">7章：記録フェーズ（Git / GitHub）</h2>
+<h3 id="header-46">7.1 なぜ保存が必要か</h3>
+<p><img src="https://assets.st-note.com/img/1766890839-pIoXgfDMCAS79eR6s83dLuvJ.png?width=1200" alt="画像"></p>
+<p>突然ですが、RPGをプレイする時、<br>
+<strong>セーブせずにラスボスまで行きますか？</strong></p>
+<p>……絶対にしませんよね。<br></p>
+<h3 id="header-47">7.2 Git / GitHub をゲームで理解する</h3>
+<p>何十時間もかけたデータが、<br>
+停電やフリーズで一瞬で消えたら、立ち直れません。<br></p>
+<p>プログラミングも、まったく同じです</p>
+<p>もし明日、</p>
+<ul>
+<li>
+<p>PCが壊れたら？</p>
+</li>
+<li>
+<p>間違って大事なフォルダを消したら？</p>
+</li>
+<li>
+<p>OSのアップデートで環境が壊れたら？</p>
+</li>
+</ul>
+<p>その瞬間、あなたのアプリは<br>
+<strong>なかったこと</strong>になります。<br></p>
+<p>そこで登場するのが<strong>GitHub（ギットハブ）</strong>です。<br></p>
+<p>GitHubは、インターネット上にある<br>
+<strong>「セーブデータ専用の保管庫」</strong>だと思ってください。<br></p>
+<h3 id="header-48">7.3 リポジトリとは何か</h3>
+<p>難しく聞こえますが、意味はシンプル。<br></p>
+<p><strong>リポジトリ = プロジェクトごとのセーブデータ置き場</strong>です。<br><br>
+ゲームで言うなら、</p>
+<ul>
+<li>
+<p>おみくじアプリ用のセーブスロット</p>
+</li>
+<li>
+<p>マンガサイト用のセーブスロット</p>
+</li>
+<li>
+<p>別の実験アプリ用のセーブスロット</p>
+</li>
+</ul>
+<p>という感じで、<br>
+<strong>アプリごとに箱（リポジトリ）を作って管理</strong>します。<br></p>
+<p><img src="https://assets.st-note.com/img/1766887946-rjiyY650Z7bkLpSTvnU8JX1u.png?width=1200" alt="画像"></p>
+<p>私のGitjiubの画面です</p>
+<p><strong>じゃあ「Git」って何？ GitHubと何が違うの？</strong></p>
+<p>ここ、よく混乱するポイントなので整理します。<br></p>
+<p>-<strong>Git</strong><br>
+→ セーブの仕組みそのもの（履歴を記録する魔法）</p>
+<p>-<strong>GitHub</strong><br>
+→ そのセーブデータを預けるクラウド倉庫</p>
+<p>-<strong>リポジトリ</strong><br>
+→ セーブデータが入っている箱</p>
+<p>つまり、</p>
+<blockquote>
+<p><strong>Gitで記録して、GitHubに保管する</strong></p>
+</blockquote>
+<p>という関係です。<br></p>
+<h3 id="header-49">7.4 プッシュとプル</h3>
+<p>ここも一気に片付けましょう。<br></p>
+<p>プッシュ（push）<br>
+👉<strong>今のセーブデータをクラウドに預ける</strong></p>
+<ul>
+<li>
+<p>PC内の最新コードを</p>
+</li>
+<li>
+<p>GitHubのリポジトリにアップロードする</p>
+</li>
+</ul>
+<p>＝「今の状態をセーブしました！」</p>
+<p>プル（pull）<br>
+👉<strong>クラウドにあるセーブデータを持ってくる</strong></p>
+<ul>
+<li>
+<p>別のPCで作業するとき</p>
+</li>
+<li>
+<p>過去の状態に戻したいとき</p>
+</li>
+</ul>
+<p>＝「セーブデータをロードしました！」</p>
+<p>コミット（commit）は何？<br>
+👉<strong>セーブポイントを作ること</strong></p>
+<ul>
+<li>
+<p>「ここまでOK！」という区切りを記録</p>
+</li>
+<li>
+<p>プッシュする前の下準備</p>
+</li>
+</ul>
+<p>なので関係はこうです👇</p>
+<p>-<strong>コミット</strong>：セーブポイント作成</p>
+<p>-<strong>プッシュ</strong>：セーブデータをクラウドに送信</p>
+<p>-<strong>プル</strong>：セーブデータをクラウドから取得</p>
+<p><strong>難しく考えなくてOKです</strong></p>
+<p>正直、最初はこう思って大丈夫です。<br></p>
+<blockquote>
+<p>「GitHubは、<br>
+<strong>絶対に消えないセーブデータ置き場</strong>」</p>
+</blockquote>
+<p>操作は全部、<strong>AIに「いい感じにやって」と頼めばOK</strong>です。<br></p>
+<h3 id="header-50">7.5 GitHubでアカウント登録しよう（ちょっと正念場）</h3>
+<p>では次に、GitHubでアカウント登録をします。<br><br>
+正直に言うと、<br>
+<strong>ここは英語しか出てきません。<br></strong></p>
+<p>なので、少しだけ「うっ」となるかもしれません。<br><br>
+でも、安心してください。<br></p>
+<p>ここでやることは<strong>英語を理解することではありません。<br></strong>大事な考え方</p>
+<ul>
+<li>
+<p>英語を読む必要はありません</p>
+</li>
+<li>
+<p>意味が分からなくても問題ありません</p>
+</li>
+<li>
+<p>「何を聞かれているか」を<strong>AIに聞けばOK</strong>です</p>
+</li>
+</ul>
+<p>分からない画面が出たら、やることは一つだけ。<br><br>
+👉<strong>スクショを撮って、AIに投げる</strong>「この画面、何を入力すればいい？」<br>
+「次はどのボタンを押せばいい？」</p>
+<p>これで十分です。<br><br>
+不安なら、Antigravityに下記のようにお願いしましょう！</p>
+<pre><code class="language-ruby">今から GitHub のアカウント登録をします。<br>
+私は初心者なので、表示される画面の意味や
+次に何を入力・クリックすればいいかを
+順番にフォローしてください。<br>
+
+英語の画面が出たら、スクショを貼るので
+その都度、分かりやすく説明してください。<br>
+</code></pre>
+<p><strong>手順</strong></p>
+<ol>
+<li>GitHub公式サイトにアクセス</li>
+<li>画面右上の<strong>「Sign up」</strong>をクリック</li>
+<li>英語の入力画面が出てきたら<br>
+👉 迷わずスクショ → AIに質問</li>
+</ol>
+<p><a href="https://github.com/">GitHub · Change is constant. GitHub keeps you ahead.</a></p>
+<p><img src="https://assets.st-note.com/img/1766888473-kp21aS6eztJ94OId7GLQbXwf.png?width=1200" alt="画像"></p>
+<p>ここを越えれば、一気に楽になります<br>
+ここが一番「英語っぽい」場所です。<br><br>
+逆に言えば、<strong>ここさえ越えれば、あとはAIが全部フォローしてくれます。<br></strong></p>
+<p>なので、</p>
+<ul>
+<li>
+<p>分からなくてOK</p>
+</li>
+<li>
+<p>立ち止まってOK</p>
+</li>
+<li>
+<p>AIに丸投げでOK</p>
+</li>
+</ul>
+<p>「一人で頑張らない」ことだけ、忘れないでください。<br><br>
+それでは、GitHubアカウント作成に進みましょう。<br></p>
+<h3 id="header-51">7.6 AIに保存を任せる</h3>
+<p>ここでは、<br>
+<strong>作ったコードをGitHubに保存（＝セーブ）</strong>します。<br><strong>プッシュとは？(おさらい）</strong>あなたのPCにあるコード（セーブデータ）を<br>
+<strong>GitHubというクラウド保管庫に転送すること</strong>です。<br></p>
+<p>初心者が一番つまずきやすい工程ですが、<br>
+Vibe Codingでは<strong>ここもAIに丸投げでOK</strong>です。<br></p>
+<p>なお、この記事では、あえて</p>
+<ul>
+<li>
+<p>GitHubの画面を一度は見ておく</p>
+</li>
+<li>
+<p>「何が起きているか」を感覚的に理解する</p>
+</li>
+</ul>
+<p>ために、<strong>リポジトリを自分で作る流れをスクショ付きで紹介します。<br></strong>ただし──</p>
+<p><strong>※実は、リポジトリ作成もAIに任せられます</strong></p>
+<p>私の環境では、<br>
+GitHubと直接やり取りするための<br>
+<strong>公式ツール（GitHub CLI）</strong>が使える状態なので、本来は、</p>
+<ul>
+<li>
+<p>リポジトリの作成</p>
+</li>
+<li>
+<p>GitHubとの接続</p>
+</li>
+<li>
+<p>プッシュ（転送）</p>
+</li>
+</ul>
+<p>までを、<strong>Antigravityが自動で判断して実行</strong>しています。<br><br>
+つまり、</p>
+<blockquote>
+<p>「リポジトリ作って、プッシュして」</p>
+</blockquote>
+<p>と頼むだけで、<strong>全部AIが裏でやってくれる</strong>状態です。<br></p>
+<p>もしあなたも、「ここ全部AIに任せたいな」<br>
+と思ったら、最初に Antigravity にこう頼めばOKです。<br><br>
+<strong>■ コピペ用プロンプト（GitHub CLI 導入）</strong></p>
+<pre><code class="language-ruby">これからGitHubへのプッシュもAIに任せたいです。<br>
+GitHub CLIが入っていない場合は、
+インストールから設定まで手伝ってください。<br>
+作業前に y/n で確認してください。<br>
+</code></pre>
+<p>これで、AIに頼むだけで、セーブできるようになります。<br></p>
+<p><strong>それでも今回は「手動ルート」でいきます</strong></p>
+<p>とはいえ、<br>
+最初から全部自動だと、</p>
+<ul>
+<li>
+<p>何が起きているか分からない</p>
+</li>
+<li>
+<p>エラーが出たときに怖い</p>
+</li>
+</ul>
+<p>という状態になりがちです。<br><br>
+なのでこの記事では、<br>
+👉<strong>まずは手動で体験</strong><br>
+👉 「実は自動化もできる」と知ってもらう<br>
+という流れにしています。<br></p>
+<p>では、実際にプッシュしてみましょう。<br><br>
+以下を、そのまま<strong>Antigravityのチャット欄に貼ってください。<br></strong></p>
+<pre><code class="language-ruby">今回のプロジェクトをGitHubにプッシュしたいです。<br>
+
+どうしたらいいですか？
+</code></pre>
+<p><img src="https://assets.st-note.com/img/1766890303-fIlECLoUsteyiAJp9VwNH4ZR.png?width=1200" alt="画像"></p>
+<p>まず、Githubでリポジトリの作成を求められる</p>
+<p><img src="https://assets.st-note.com/img/1766890003-sORPNfzg6xLnXyeEMrZ8A9pW.png?width=1200" alt="画像"></p>
+<p>作成していきます。<br>「New」をクリック。<br></p>
+<p><img src="https://assets.st-note.com/img/1766890018-DCVKievytOlxdkYJaH8Q0Nu3.png?width=1200" alt="画像"></p>
+<p>名前は、プロジェクト名またはAntigravityのおすすめでOK</p>
+<p><img src="https://assets.st-note.com/img/1766890204-DIYSoQn1ebpiLwWcjXFlxEy3.png?width=1200" alt="画像"></p>
+<p>URLをAntigravityに教えてあげましょう</p>
+<p><img src="https://assets.st-note.com/img/1766890551-pqlvFmGUe97jhArOdsRzCZXH.png?width=1200" alt="画像"></p>
+<p>プッシュしてくれます</p>
+<p><img src="https://assets.st-note.com/img/1766890488-a8eH2nG0OXfmNxioJvs9cEBP.png?width=1200" alt="画像"></p>
+<p>プッシュ完了しました</p>
+<p><img src="https://assets.st-note.com/img/1766890421-irBszdnZJLEbwqmupog0cTf4.png?width=1200" alt="画像"></p>
+<p>履歴画面です。<br>この状態にいつでも戻ることができます！</p>
+<p>このように、あなたのコードは<br>
+👉<strong>PCが壊れても消えない状態</strong><br>
+👉<strong>いつでも戻せる状態</strong>にできます。<br><br>
+必ずマスターしましょう！</p>
+<h3 id="header-52">7.7 ✅ 記録フェーズ チェックリスト</h3>
+<p>🔲 GitHubのアカウントを作成できた</p>
+<p>🔲 自分のプロジェクト用リポジトリを作成できた</p>
+<p>🔲 コードをGitHubにプッシュ（保存）できた</p>
+<p>🔲 「プッシュ＝セーブ」だと体感で理解できた</p>
+<p>🔲 PCが壊れてもコードは残る状態になった</p>
+<p>👉 ここまでチェックが付いたら、次の章へ進んでOKです。<br></p>
+<h2 id="header-53">8章：公開フェーズ（デプロイ）</h2>
+<h3 id="header-54">8.1 なぜ Vercel なのか</h3>
+<p><img src="https://assets.st-note.com/img/1766891251-Mdn9Z2vIW41kAth5iwXKGEUQ.jpg?width=1200" alt="画像"></p>
+<p>最後は、この保存したデータを<br>
+<strong>全世界に公開（デプロイ）</strong>します。<br><br>
+本来、Webサイトの公開はかなり面倒でした。<br></p>
+<ul>
+<li>
+<p>サーバーを契約して（月額〇〇円）</p>
+</li>
+<li>
+<p>ファイルをアップロードして</p>
+</li>
+<li>
+<p>黒い画面で設定して…</p>
+</li>
+</ul>
+<p>正直、初心者が一人でやるにはハードルが高すぎます。<br><br>
+ですが、現代には<br>
+<strong>その面倒をほぼ全部肩代わりしてくれる神サービス</strong>があります。<br><br>
+それが<strong>「Vercel（バーセル）」</strong>です。<br></p>
+<h3 id="header-55">8.2 GitHub と連携する意味</h3>
+<p>それは、GitHubと相性バツグンだから。<br></p>
+<p>Vercelは、<strong>GitHubと連携することで初めて力を発揮</strong>します。<br></p>
+<p>一度「このリポジトリを公開する」と設定すれば、<br>
+その後は</p>
+<p>GitHubにコードを保存（プッシュ）<br>
+→「更新していいよ」とVercelが判断<br>
+→自動で最新状態を公開<br>
+という流れになります。<br></p>
+<p>※ 最初の連携と公開操作は自分で行います<br>
+※ 勝手に公開されるわけではないので安心してください<strong>そして、完全無料（個人開発なら十分）</strong>個人の学習・趣味・ポートフォリオ用途であれば、</p>
+<ul>
+<li>
+<p>無料プランでOK</p>
+</li>
+<li>
+<p>クレジットカード登録も不要</p>
+</li>
+</ul>
+<p>「とりあえず公開してみたい」人には、これ以上ない環境です。<br></p>
+<p><strong>とにかく速い</strong></p>
+<p>Vercelは、世界中にサーバーを持っています。<br><br>
+そのため、</p>
+<ul>
+<li>
+<p>日本から見ても</p>
+</li>
+<li>
+<p>海外から見ても</p>
+</li>
+</ul>
+<p>ページの表示がとても速いです。<br><br>
+「遅くて開かない…」というストレスがほぼありません。<br></p>
+<p><strong>役割を一言でまとめると</strong></p>
+<p>-<strong>GitHub</strong><br>
+→ 倉庫（コードを安全に保管する場所・基本は非公開）</p>
+<p>-<strong>Vercel</strong><br>
+→ 展示場（世界中の人が見られるステージ）</p>
+<p>GitHubにしまった作品を、<br>
+Vercelが<strong>「展示していい形」に整えて公開してくれる</strong><br>
+──そんなイメージです。<br></p>
+<p>このあと実際に、</p>
+<ul>
+<li>
+<p>Vercelのアカウントを作って</p>
+</li>
+<li>
+<p>GitHubとつなぎ</p>
+</li>
+<li>
+<p>AIに「デプロイして」と頼む</p>
+</li>
+</ul>
+<p>という流れをやっていきます。<br></p>
+<p>「また英語が出てきそう…」と思っても大丈夫。<br><br>
+ここも<strong>AIに丸投げでOK</strong>です。<br></p>
+<p>次は、いよいよ<br>
+<strong>あなたのアプリを世界に放つ瞬間</strong>です 🚀</p>
+<h3 id="header-56">8.3 Vercelの登録</h3>
+<ol>
+<li><a href="https://vercel.com/">Vercel公式サイト</a> にアクセスし、「Sign Up」を押す。<br>
+2.<strong>「Hobby」</strong>プランを選択し、名前を入力。<br>
+3.<strong>「Continue with GitHub」</strong>を押して、さっき作ったGitHubアカウントと連携する。<br>
+<ul>
+<li>これで登録完了です！</li>
+</ul>
+</li>
+</ol>
+<p><a href="https://vercel.com/">Vercel: Build and deploy the best web experiences with the AI Cloud – Vercel</a></p>
+<pre><code class="language-ruby">作ったアプリを全世界に公開したいです。<br>
+Vercelのセットアップをフォローしてください。<br>
+</code></pre>
+<p>※ここも英語の画面が出ますが、<strong>読む必要はありません。<br>いつも通り、AIに聞きながら進めましょう。<br></strong></p>
+<h3 id="header-57">8.4 デプロイをAIに任せる</h3>
+<p>登録が済んだら、チャット欄でこう唱えてください。<br></p>
+<p><strong>■ コピペ用プロンプト</strong></p>
+<blockquote>
+<p><strong>「このプロジェクトを、Vercelを使ってデプロイ（公開）して。<br>」</strong></p>
+</blockquote>
+<p>AIがいくつかの確認をしてくるかもしれません（ログイン認証など）。<br><br>
+その都度、画面の指示に従ってポチポチ押していけばOKです。<br></p>
+<p><img src="https://assets.st-note.com/img/1766892884-8ebx26IOqZ4mT9dJ1giC5PMu.png?width=1200" alt="画像"></p>
+<p>まず、GEMINI.mdに記載したルールにより、ヒアリングがあります</p>
+<p><img src="https://assets.st-note.com/img/1766892876-drRwi6XANVBEeZ9f4ILm8OMs.png?width=1200" alt="画像"></p>
+<p>今回のWEBページは、利用規約とプライバシーポリシーは不要と判断しました</p>
+<p><img src="https://assets.st-note.com/img/1766892872-egrW0zPZ2plfhC3bS9OdtTxK.png?width=1200" alt="画像"></p>
+<p>デプロイが完了すると、URLが表示されます</p>
+<p><img src="https://assets.st-note.com/img/1766892705-WOagrzfIomxUqbBT1H380LMl.png?width=1200" alt="画像"></p>
+<p>Vercelの画面</p>
+<h3 id="header-58">8.5 公開されたサイトを確認する</h3>
+<p>処理が終わると、`https://…vercel.app` という<strong>「本物のURL」</strong>が発行されます。<br></p>
+<p><a href="https://manga-gallery-sable.vercel.app/?v=2">Manga Gallery</a></p>
+<p><a href="https://omikuji-app-theta.vercel.app/?v=new1">CYBER OMIKUJI 2077</a></p>
+<p>それをスマホで開いてみてください。<br>動いていますか？<br>
+…おめでとうございます！！<br>
+<strong>あなたが作ったアプリが、今、インターネットの海に産声を上げました。<br></strong></p>
+<p>そのURLを友だちにLINEで送りつけましょう。<br><br>
+「これ、俺がAIで作ったんだぜ」と。<br></p>
+<h3 id="header-59">8.6 ✅ 公開フェーズ チェックリスト</h3>
+<p>🔲 Vercelにログインできた</p>
+<p>🔲 自分のプロジェクトがVercelに連携されていることを確認した</p>
+<p>🔲 発行された公開URLにアクセスした</p>
+<p>🔲 スマホや別ブラウザからも表示できることを確認した</p>
+<p>👉 ここまでチェックが付いたら、次の章へ進んでOKです。<br></p>
+<h2 id="header-60">９章【Q&amp;A】よくある質問コーナー</h2>
+<p>初心者の皆さんが抱きがちな質問に、先にお答えしておきます。<br></p>
+<h3 id="header-61">Q1. 本当に完全無料ですか？</h3>
+<p><strong>A. はい、現時点では完全無料です。<br></strong><br>
+Antigravity自体も無料ですし、内蔵されているAI（Gemini）の使用料もかかりません。<br>クレジットカードの登録も不要です。<br></p>
+<h3 id="header-62">Q2. 低スペックなPCでも大丈夫？</h3>
+<p><strong>A. ブラウザが快適に動くなら大丈夫です。<br></strong><br>
+Antigravityは非常に軽量なアプリなので、最新のゲーミングPCなどは必要ありません。<br>普通のノートPC（MacBook Airなど）でサクサク動きます。<br></p>
+<h3 id="header-63">Q3. スマホやiPadでもできますか？</h3>
+<p><strong>A. 閲覧はできますが、開発はPC推奨です。<br></strong><br>
+コードを書いたり、細かい設定をするのは、現時点ではPC（キーボードとマウス）があった方が圧倒的に楽です。<br></p>
+<h3 id="header-64">Q4. 英語が全く読めませんが平気ですか？</h3>
+<p><strong>A. スクショ翻訳があるので平気です。<br></strong><br>
+Antigravityの画面は英語の部分もありますが、STEP 1で日本語化できますし、わからないメッセージはスクショしてAIに投げれば全部翻訳・解説してくれます。<br></p>
+<h3 id="header-65">Q5. 作ったアプリはスマホで見れますか？</h3>
+<p><strong>A. はい！</strong><br>
+STEP 5で「Vercel」にデプロイすれば、発行されたURLをスマホに送るだけで、自分のスマホで動かせます。<br>家宝になりますよ。<br></p>
+<h2 id="header-66">10章：おわりに（冒険の続き）</h2>
+<p>お疲れ様でした！<br>
+ここまで走り抜けたあなたは、もう「初心者」ではありません。<br><br>
+最強の相棒（AI）と、最強の武器（環境）を手に入れた、<strong>一人前の「Vibe Coder」です。<br></strong></p>
+<h3 id="header-67">10.1 0地点の再確認</h3>
+<p>冒頭で話した<strong>「プログラミングの0地点」</strong>。<br><br>
+その意味が、今は体感できているはずです。<br></p>
+<ul>
+<li>
+<p>エラーが出ても、スクショすればいい。<br></p>
+</li>
+<li>
+<p>やり方が分からなくても、チャットで聞けばいい。<br></p>
+</li>
+</ul>
+<p>-<strong>「何が起きても、自分一人で解決して前に進める」</strong></p>
+<p>この状態こそが「0地点」であり、同時に<strong>「最強のスタートライン」</strong>です。<br><br>
+このスタートラインに立ったあなたに、もはや作れないものはありません。<br></p>
+<h3 id="header-68">10.2 次のミッション</h3>
+<p>ここから先は、教科書をなぞるのではなく、<strong>「自分の悩み」</strong>を解決する旅に出てください。<br></p>
+<p>私が作った「画像9分割アプリ」もそうでした。<br><br>
+「スマホで画像をちまちま加工するの、マジで面倒くさい…」<br>
+その怒りをAIにぶつけたら、1時間でアプリになり、世界中の人が使ってくれるツールになりました。<br></p>
+<p>あなたの日常にも<strong>「これ面倒だな」</strong>が隠れているはずです。<br><br>
+それをAIに愚痴ってください。<br>それがあなたの次回作になります。<br></p>
+<h3 id="header-69">10.3 コメント欄の使い方</h3>
+<p>もし途中でつまずいたり、エラーが解決できなかったら？<br>
+本書の<strong>コメント欄</strong>をサポートセンターとして使ってください。<br></p>
+<ul>
+<li>
+<p>「STEP 2のここで変なエラーが出ました！」</p>
+</li>
+<li>
+<p>「用語の意味がわかりません！」</p>
+</li>
+</ul>
+<p>私が全力で回答しますし、他の親切なVibe Coderたちが助けてくれるかもしれません。<br><br>
+また、<strong>アプリが完成したら、ぜひURLを貼って自慢してください！</strong>みんなで「いいね」しに行きます。<br></p>
+<p>もし、本書が参考になったらスキで応援、友人にシェアしていただけると大変はげみになります。<br></p>
+<p>では今日はここまで。<br><br>
+最後まで読んでいただき、ありがとうございました。<br></p>
+<ul>
+<li>
+<p><a href="https://note.com/hashtag/%E7%84%A1%E6%96%99">
+#無料
+</a></p>
+</li>
+<li>
+<p><a href="https://note.com/hashtag/%E3%83%90%E3%82%A4%E3%83%96%E3%82%B3%E3%83%BC%E3%83%87%E3%82%A3%E3%83%B3%E3%82%B0">
+#バイブコーディング
+</a></p>
+</li>
+</ul>
+<p>[</p>
+<p>【完全無料】初心者向けVibe Coding入門：AIと対話してアプリを作る→Gitで保存→世界に公開｜Kino</p>
+
+    <div class="app-showcase">
+        <h2>あなたの旅はここから始まります</h2>
+        <p>本書で紹介したアプリやコードの事例はこちら</p>
+        <p><a href="https://github.com/kino-176222/manga-gallery">📌 GitHub Repository</a></p>
+        <p><a href="https://manga-gallery-sable.vercel.app">🚀 Demo App</a></p>
+    </div>
+    <div class="x-contact">
+        <h3>質問はこちらへ</h3>
+        <p><a href="https://twitter.com/search?q=VibeCoding">#VibeCoding で検索・ツイート</a></p>
+    </div>
+    
+</body>
+</html>
