@@ -50,19 +50,6 @@ async function generateKindleHtml() {
     htmlContent = htmlContent.replace(/<p>\s*A[\.．]\s*(.*?)<\/p>/g, '<div class="qa-item qa-a"><span class="qa-icon">A.</span> $1</div>');
     htmlContent = htmlContent.replace(/<p>\s*(【TIP】|【ヒント】|💡)\s*(.*?)<\/p>/g, '<div class="hint-box"><strong>💡 $1</strong><br>$2</div>');
 
-    htmlContent += `
-    <div class="app-showcase">
-        <h2>あなたの旅はここから始まります</h2>
-        <p>本書で紹介したアプリやコードの事例はこちら</p>
-        <p><a href="https://github.com/kino-176222/manga-gallery">📌 GitHub Repository</a></p>
-        <p><a href="https://manga-gallery-sable.vercel.app">🚀 Demo App</a></p>
-    </div>
-    <div class="x-contact">
-        <h3>質問はこちらへ</h3>
-        <p><a href="https://twitter.com/search?q=VibeCoding">#VibeCoding で検索・ツイート</a></p>
-    </div>
-    `;
-
     // ---------------------------------------------------------
     // Final Output with RICH CSS
     // ---------------------------------------------------------
