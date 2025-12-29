@@ -68,28 +68,45 @@ async function generateKindleHtml() {
             margin: 0 auto;
             padding: 5%;
             background-color: #fbfbf9;
+            counter-reset: chapter-counter;
         }
         h1 { margin-bottom: 2em; text-align: center; color: #1a237e; }
         
-        /* 大見出し（h2）- 青系ボックススタイル */
+        /* 大見出し（h2）- 大きな枠線ボックススタイル */
         h2 { 
-            font-size: 1.4em; 
-            margin-top: 3em; 
-            padding: 15px 20px;
-            background-color: #e3f2fd; /* 淡い青背景 */
-            border-left: 6px solid #1976d2; /* 濃い青の左線 */
-            color: #1565c0; /* 青系テキスト */
-            page-break-before: always; 
+            font-size: 1.5em; 
+            margin: 3em 0 2em 0;
+            padding: 25px 30px 25px 80px;
+            background-color: #ffffff;
+            border: 3px solid #1976d2;
+            border-left: 12px solid #1976d2;
+            color: #1a237e;
+            position: relative;
+            page-break-before: always;
+            font-weight: bold;
         }
         
-        /* 小見出し（h3）- 青系バースタイル */
+        /* 章番号を自動表示 */
+        h2::before {
+            content: "第" counter(chapter-counter) "章";
+            counter-increment: chapter-counter;
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            font-size: 0.6em;
+            color: #1976d2;
+            font-weight: normal;
+            letter-spacing: 0.1em;
+        }
+        
+        /* 小見出し（h3）- シンプルな青バー */
         h3 { 
             font-size: 1.2em; 
             margin-top: 2em; 
             padding: 10px 15px;
-            background-color: #e8f4f8; /* より淡い青背景 */
-            border-left: 4px solid #42a5f5; /* 明るい青の左線 */
-            color: #1976d2; /* 青系テキスト */
+            background-color: #e8f4f8;
+            border-left: 4px solid #42a5f5;
+            color: #1976d2;
         }
         p { margin-bottom: 1em; text-align: justify; }
         img { max-width: 100%; height: auto; display: block; margin: 1em auto; border-radius: 4px; }
