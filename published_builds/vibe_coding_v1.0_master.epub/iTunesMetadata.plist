@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BKAllocatedSize</key>
+	<integer>15982592</integer>
+	<key>BKDisplayName</key>
+	<string>vibe_coding_reborn</string>
+	<key>BKGenerationCount</key>
+	<integer>2</integer>
+	<key>BKInsertionDate</key>
+	<integer>788692805</integer>
+	<key>artistName</key>
+	<string>Kino</string>
+	<key>book-info</key>
+	<dict>
+		<key>cover-image-hash</key>
+		<string>820C300C7C4955541456708F945562A6</string>
+		<key>cover-image-path</key>
+		<string>EPUB/media/file75.jpg</string>
+		<key>mime-type</key>
+		<string>application/epub+zip</string>
+		<key>package-file-hash</key>
+		<string>E7475C5A474718D000FB16892761AB75</string>
+		<key>publisher-unique-id</key>
+		<string>urn:uuid:17d25165-07df-46c4-80f6-37db113bc6e5</string>
+		<key>unique-id</key>
+		<integer>-5412273339795397683</integer>
+		<key>update-level</key>
+		<integer>2</integer>
+	</dict>
+	<key>isPreview</key>
+	<false/>
+	<key>itemName</key>
+	<string>【完全無料】初心者向けVibe Coding入門</string>
+	<key>updateDate</key>
+	<date>2025-12-29T09:20:05Z</date>
+</dict>
+</plist>

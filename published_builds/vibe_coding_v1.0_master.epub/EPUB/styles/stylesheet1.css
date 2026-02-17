@@ -1,0 +1,165 @@
+/* Kindle用カスタムCSS (リッチデザイン + TOC階層修正版 Final) */
+
+/* --------------------------------------------------
+   目次 (TOC) の調整 - ユーザー要望の階層化と間延び解消
+   -------------------------------------------------- */
+nav#toc ol,
+nav#toc ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+/* 階層ごとのインデント設定（Kindle標準目次用 - 一応残す） */
+nav#toc li>ol,
+nav#toc li>ul {
+    padding-left: 1.5em;
+    list-style-type: none;
+}
+
+nav#toc li {
+    margin-bottom: 0.3em;
+    font-size: 1.0em;
+}
+
+/* 基本のリンクスタイル */
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+nav#toc a {
+    text-decoration: none;
+    color: #0066cc;
+    display: block;
+}
+
+/* --------------------------------------------------
+   見出しデザイン
+   -------------------------------------------------- */
+h1 {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+h2 {
+    background-color: #f4f8fb;
+    border-left: 6px solid #2b7bb9;
+    padding: 10px 15px;
+    margin-top: 2em;
+    margin-bottom: 1em;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #333;
+    page-break-after: avoid;
+}
+
+h3 {
+    border-bottom: 2px solid #2b7bb9;
+    padding-bottom: 5px;
+    margin-top: 1.5em;
+    margin-bottom: 0.8em;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #444;
+    page-break-after: avoid;
+}
+
+/* --------------------------------------------------
+   プロンプト・引用ボックス
+   -------------------------------------------------- */
+blockquote {
+    display: block;
+    background-color: #f7f7f7;
+    border-left: 4px solid #777;
+    margin: 1.5em 0;
+    padding: 10px 15px;
+    color: #333;
+    font-family: monospace, serif;
+}
+
+code {
+    background-color: #eee;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: monospace;
+    font-size: 0.9em;
+}
+
+.url-text {
+    font-family: monospace;
+    background-color: #eee;
+}
+
+/* --------------------------------------------------
+   インライン目次（手動挿入分）のスタイル - 改善版
+   -------------------------------------------------- */
+.inline-toc {
+    background-color: #fff;
+    padding: 10px;
+    margin: 2em 0;
+    border: 1px solid #eee;
+    border-radius: 8px;
+}
+
+.inline-toc ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+/* 章（H2レベル）のスタイル */
+.inline-toc li.toc-chapter {
+    /* 章ごとの間隔を確保して区切りをよくする */
+    margin-top: 1.2em;
+    margin-bottom: 0.2em;
+}
+
+/* 最初の章は上を開けない */
+.inline-toc li.toc-chapter:first-child {
+    margin-top: 0;
+}
+
+.inline-toc li.toc-chapter>a {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #0055aa;
+    padding: 6px 5px;
+    border-bottom: 1px solid #ddd;
+    /* 章の区切り線 */
+    display: block;
+}
+
+/* 節（H3レベル）のリスト */
+.inline-toc ul.toc-section {
+    /* ここで明確に段落を下げる（ユーザー要望: 空白を1文字空けて階層化） */
+    padding-left: 1.5em;
+    /* 1.5文字分下げる */
+    margin-top: 0.2em;
+}
+
+/* 節（H3レベル）のアイテム */
+.inline-toc li.toc-item {
+    margin: 0;
+    border-bottom: 1px solid #fcfcfc;
+    /* うっすらとした線 */
+}
+
+.inline-toc li.toc-item>a {
+    font-size: 0.95em;
+    font-weight: normal;
+    /* 太字にしない */
+    padding: 5px 5px;
+    /* 上下の余白を詰める（ユーザー要望: 間延び解消） */
+    color: #4477aa;
+    display: block;
+}
+
+/* タップ時の反応 */
+.inline-toc a:active,
+.inline-toc a:hover {
+    background-color: #e6f0ff;
+    border-radius: 4px;
+}

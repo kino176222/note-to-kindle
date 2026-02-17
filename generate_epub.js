@@ -4,14 +4,15 @@ const MarkdownIt = require('markdown-it');
 const epub = require('epub-gen');
 const matter = require('gray-matter');
 
-const INPUT_FILE = 'processed_manuscript.md';
+const INPUT_FILE = 'vibe_coding_master.md';
 const OUTPUT_EPUB = '/Users/kino/Desktop/vibe_coding_book.epub'; // ユーザーがデスクトップで見つけやすいように
 
 async function generateEpub() {
     const md = new MarkdownIt({
         html: true,
         breaks: true,
-        linkify: true
+        linkify: true,
+        xhtmlOut: true
     });
 
     const content = await fs.readFile(INPUT_FILE, 'utf8');
@@ -40,8 +41,11 @@ async function generateEpub() {
         if (line.match(/^##\s/)) {
             // 前の章を保存
             if (buffer.length > 0) {
-                currentChapter.content = md.render(buffer.join('\n'));
-                chapters.push(currentChapter);
+                const html = md.render(buffer.join('\n'));
+                if (html && html.trim()) {
+                    currentChapter.content = html;
+                    chapters.push(currentChapter);
+                }
             }
             // 新しい章の開始
             const title = line.replace(/^##\s/, '').trim();
@@ -53,8 +57,11 @@ async function generateEpub() {
     }
     // 最後の章を保存
     if (buffer.length > 0) {
-        currentChapter.content = md.render(buffer.join('\n'));
-        chapters.push(currentChapter);
+        const html = md.render(buffer.join('\n'));
+        if (html && html.trim()) {
+            currentChapter.content = html;
+            chapters.push(currentChapter);
+        }
     }
 
     const options = {

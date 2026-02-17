@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<package version="3.0" xmlns="http://www.idpf.org/2007/opf" xml:lang="ja" unique-identifier="epub-id-1" prefix="ibooks: http://vocabulary.itunes.apple.com/rdf/ibooks/vocabulary-extensions-1.0/">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+    <dc:identifier id="epub-id-1">urn:uuid:17d25165-07df-46c4-80f6-37db113bc6e5</dc:identifier>
+    <dc:title id="epub-title-1">【完全無料】初心者向けVibe Coding入門</dc:title>
+    <dc:date id="epub-date">2025-12-29T09:19:49Z</dc:date>
+    <dc:language>ja</dc:language>
+    <dc:creator id="epub-creator-1">Kino</dc:creator>
+    <meta refines="#epub-creator-1" property="role" scheme="marc:relators">aut</meta>
+    <meta property="dcterms:modified">2025-12-29T09:19:49Z</meta>
+    <meta property="schema:accessMode">textual</meta>
+    <meta property="schema:accessModeSufficient">textual</meta>
+    <meta property="schema:accessibilityFeature">alternativeText</meta>
+    <meta property="schema:accessibilityFeature">readingOrder</meta>
+    <meta property="schema:accessibilityFeature">structuralNavigation</meta>
+    <meta property="schema:accessibilityFeature">tableOfContents</meta>
+    <meta property="schema:accessibilityHazard">none</meta>
+  </metadata>
+  <manifest>
+    <item id="ncx" href="toc.ncx" media-type="application/x-dtbncx+xml" />
+    <item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav" />
+    <item id="stylesheet1" href="styles/stylesheet1.css" media-type="text/css" />
+    <item id="cover_xhtml" href="text/cover.xhtml" media-type="application/xhtml+xml" properties="svg" />
+    <item id="title_page_xhtml" href="text/title_page.xhtml" media-type="application/xhtml+xml" />
+    <item id="ch001_xhtml" href="text/ch001.xhtml" media-type="application/xhtml+xml" />
+    <item properties="cover-image" id="file75_jpg" href="media/file75.jpg" media-type="image/jpeg" />
+    <item id="file74_png" href="media/file74.png" media-type="image/png" />
+    <item id="file73_png" href="media/file73.png" media-type="image/png" />
+    <item id="file72_png" href="media/file72.png" media-type="image/png" />
+    <item id="file71_jpg" href="media/file71.jpg" media-type="image/jpeg" />
+    <item id="file70_jpg" href="media/file70.jpg" media-type="image/jpeg" />
+    <item id="file69_jpg" href="media/file69.jpg" media-type="image/jpeg" />
+    <item id="file68_jpg" href="media/file68.jpg" media-type="image/jpeg" />
+    <item id="file67_png" href="media/file67.png" media-type="image/png" />
+    <item id="file66_jpg" href="media/file66.jpg" media-type="image/jpeg" />
+    <item id="file65_jpg" href="media/file65.jpg" media-type="image/jpeg" />
+    <item id="file64_jpg" href="media/file64.jpg" media-type="image/jpeg" />
+    <item id="file63_jpg" href="media/file63.jpg" media-type="image/jpeg" />
+    <item id="file62_jpg" href="media/file62.jpg" media-type="image/jpeg" />
+    <item id="file61_jpg" href="media/file61.jpg" media-type="image/jpeg" />
+    <item id="file60_jpg" href="media/file60.jpg" media-type="image/jpeg" />
+    <item id="file59_jpg" href="media/file59.jpg" media-type="image/jpeg" />
+    <item id="file58_jpg" href="media/file58.jpg" media-type="image/jpeg" />
+    <item id="file57_jpg" href="media/file57.jpg" media-type="image/jpeg" />
+    <item id="file56_jpg" href="media/file56.jpg" media-type="image/jpeg" />
+    <item id="file55_jpg" href="media/file55.jpg" media-type="image/jpeg" />
+    <item id="file54_jpg" href="media/file54.jpg" media-type="image/jpeg" />
+    <item id="file53_jpg" href="media/file53.jpg" media-type="image/jpeg" />
+    <item id="file52_jpg" href="media/file52.jpg" media-type="image/jpeg" />
+    <item id="file51_jpg" href="media/file51.jpg" media-type="image/jpeg" />
+    <item id="file50_jpg" href="media/file50.jpg" media-type="image/jpeg" />
+    <item id="file49_jpg" href="media/file49.jpg" media-type="image/jpeg" />
+    <item id="file48_jpg" href="media/file48.jpg" media-type="image/jpeg" />
+    <item id="file47_jpg" href="media/file47.jpg" media-type="image/jpeg" />
+    <item id="file46_jpg" href="media/file46.jpg" media-type="image/jpeg" />
+    <item id="file45_jpg" href="media/file45.jpg" media-type="image/jpeg" />
+    <item id="file44_jpg" href="media/file44.jpg" media-type="image/jpeg" />
+    <item id="file43_jpg" href="media/file43.jpg" media-type="image/jpeg" />
+    <item id="file42_jpg" href="media/file42.jpg" media-type="image/jpeg" />
+    <item id="file41_jpg" href="media/file41.jpg" media-type="image/jpeg" />
+    <item id="file40_jpg" href="media/file40.jpg" media-type="image/jpeg" />
+    <item id="file39_jpg" href="media/file39.jpg" media-type="image/jpeg" />
+    <item id="file38_jpg" href="media/file38.jpg" media-type="image/jpeg" />
+    <item id="file37_png" href="media/file37.png" media-type="image/png" />
+    <item id="file36_jpg" href="media/file36.jpg" media-type="image/jpeg" />
+    <item id="file35_jpg" href="media/file35.jpg" media-type="image/jpeg" />
+    <item id="file34_jpg" href="media/file34.jpg" media-type="image/jpeg" />
+    <item id="file33_jpg" href="media/file33.jpg" media-type="image/jpeg" />
+    <item id="file32_jpg" href="media/file32.jpg" media-type="image/jpeg" />
+    <item id="file31_jpg" href="media/file31.jpg" media-type="image/jpeg" />
+    <item id="file30_jpg" href="media/file30.jpg" media-type="image/jpeg" />
+    <item id="file29_png" href="media/file29.png" media-type="image/png" />
+    <item id="file28_jpg" href="media/file28.jpg" media-type="image/jpeg" />
+    <item id="file27_png" href="media/file27.png" media-type="image/png" />
+    <item id="file26_jpg" href="media/file26.jpg" media-type="image/jpeg" />
+    <item id="file25_png" href="media/file25.png" media-type="image/png" />
+    <item id="file24_jpg" href="media/file24.jpg" media-type="image/jpeg" />
+    <item id="file23_jpg" href="media/file23.jpg" media-type="image/jpeg" />
+    <item id="file22_jpg" href="media/file22.jpg" media-type="image/jpeg" />
+    <item id="file21_jpg" href="media/file21.jpg" media-type="image/jpeg" />
+    <item id="file20_jpg" href="media/file20.jpg" media-type="image/jpeg" />
+    <item id="file19_jpg" href="media/file19.jpg" media-type="image/jpeg" />
+    <item id="file18_jpg" href="media/file18.jpg" media-type="image/jpeg" />
+    <item id="file17_jpg" href="media/file17.jpg" media-type="image/jpeg" />
+    <item id="file16_jpg" href="media/file16.jpg" media-type="image/jpeg" />
+    <item id="file15_jpg" href="media/file15.jpg" media-type="image/jpeg" />
+    <item id="file14_jpg" href="media/file14.jpg" media-type="image/jpeg" />
+    <item id="file13_png" href="media/file13.png" media-type="image/png" />
+    <item id="file12_jpg" href="media/file12.jpg" media-type="image/jpeg" />
+    <item id="file11_png" href="media/file11.png" media-type="image/png" />
+    <item id="file10_jpg" href="media/file10.jpg" media-type="image/jpeg" />
+    <item id="file9_jpg" href="media/file9.jpg" media-type="image/jpeg" />
+    <item id="file8_jpg" href="media/file8.jpg" media-type="image/jpeg" />
+    <item id="file7_jpg" href="media/file7.jpg" media-type="image/jpeg" />
+    <item id="file6_jpg" href="media/file6.jpg" media-type="image/jpeg" />
+    <item id="file5_jpg" href="media/file5.jpg" media-type="image/jpeg" />
+    <item id="file4_jpg" href="media/file4.jpg" media-type="image/jpeg" />
+    <item id="file3_jpg" href="media/file3.jpg" media-type="image/jpeg" />
+    <item id="file2_jpg" href="media/file2.jpg" media-type="image/jpeg" />
+    <item id="file1_jpg" href="media/file1.jpg" media-type="image/jpeg" />
+    <item id="file0_jpg" href="media/file0.jpg" media-type="image/jpeg" />
+  </manifest>
+  <spine toc="ncx">
+    <itemref idref="cover_xhtml" />
+    <itemref idref="title_page_xhtml" linear="yes" />
+    <itemref idref="nav" />
+    <itemref idref="ch001_xhtml" />
+  </spine>
+  <guide>
+    <reference type="toc" title="【完全無料】初心者向けVibe Coding入門" href="nav.xhtml" />
+    <reference type="cover" title="Cover" href="text/cover.xhtml" />
+  </guide>
+</package>

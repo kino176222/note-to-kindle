@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const MarkdownIt = require('markdown-it');
 const path = require('path');
 
-const masterPath = '/Users/kino/Desktop/vibe_coding_master.md';
+const masterPath = path.join(__dirname, 'vibe_coding_master.md');
 const outputPath = '/Users/kino/Desktop/vibe_coding_kindle_final.html';
 
 async function generateKindleHtml() {
